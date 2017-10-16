@@ -11,17 +11,17 @@ namespace GoSentinel.Tests
     public class DialogFlowSDK
     {
         private AIConfiguration config;
-        private ApiAi apiAi;
+        private readonly ApiAi _apiAi;
 
         public DialogFlowSDK()
         {
             config = new AIConfiguration("7f798b1c53e34efcad868e2e54a95275", SupportedLanguage.Italian);
-            apiAi = new ApiAi(config);
+            _apiAi = new ApiAi(config);
         }
         [Fact]
         public void Should_return_200()
         {
-            var response = apiAi.TextRequest("aggiungi rattata cp 1200");
+            var response = _apiAi.TextRequest("aggiungi rattata cp 1200");
             Assert.Equal(response.Status.Code, 200);
         }
 
@@ -36,7 +36,7 @@ namespace GoSentinel.Tests
                 "notifica pidgey cp 123",
                 "aggiungi rattata lv 30"
             };
-            var allResults = queries.Select(q => apiAi.TextRequest(q));
+            var allResults = queries.Select(q => _apiAi.TextRequest(q));
             Assert.All(allResults, r => Assert.Equal(r.Result.Action, "AddPokemonFilter"));
         }
     }

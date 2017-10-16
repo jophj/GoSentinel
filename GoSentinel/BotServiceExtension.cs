@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApiAiSDK;
 using GoSentinel.Bots.Controllers;
 using GoSentinel.Models;
 using GoSentinel.Services;
