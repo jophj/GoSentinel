@@ -1,5 +1,6 @@
 ﻿using System;
 using ApiAiSDK;
+using GoSentinel.Services;
 using Telegram.Bot.Types;
 
 namespace GoSentinel.Bots.Controllers
@@ -18,6 +19,8 @@ namespace GoSentinel.Bots.Controllers
             Console.WriteLine(message);
             var response = _apiAi.TextRequest(message.Text);
             bot.SendTextMessageAsync(message.Chat.Id, response.Result.Fulfillment.Speech);
+            var action = AiResponseToAction.Map(response);
+
         }
     }
 }
