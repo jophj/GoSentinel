@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GoSentinel.Bots;
 using GoSentinel.Bots.Controllers;
 
 namespace GoSentinel.Models
@@ -13,9 +14,9 @@ namespace GoSentinel.Models
         public int ValueMin { get; set; }
         public int? ValueMax { get; set; }
 
-        public void Accept(IActionVisitor visitor)
+        public void Accept(IAiActionHandler handler)
         {
-            visitor.Visit(this);
+            handler.Handle(this);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ApiAiSDK;
 using GoSentinel.Models;
 using GoSentinel.Services;
@@ -9,33 +10,29 @@ namespace GoSentinel.Bots.Controllers
     public class BotMessageController :  IBotMessageController
     {
         private readonly ApiAi _apiAi;
-        private readonly IActionVisitor _actionVisitor;
+        private readonly IAiActionHandler _aiActionHandler;
 
-        public BotMessageController(ApiAi apiAi, IActionVisitor actionVisitor)
+        public BotMessageController(ApiAi apiAi, IAiActionHandler aiActionHandler)
         {
             _apiAi = apiAi;
-            _actionVisitor = actionVisitor;
+            _aiActionHandler = aiActionHandler;
         }
 
-        public void OnMessage(IBot bot, Message message)
+        public async Task OnMessageAsync(IBot bot, Message message)
         {
             var response = _apiAi.TextRequest(message.Text);
-            bot.SendTextMessageAsync(message.Chat.Id, response.Result.Fulfillment.Speech);
+            await bot.SendTextMessageAsync(message.Chat.Id, response.Result.Fulfillment.Speech);
             var action = AiResponseToAction.Map(response);
-            action.Accept(_actionVisitor);
+            action.Accept(_aiActionHandler);
         }
     }
 
-    public interface IActionVisitor
+    public class AiActionHandler : IAiActionHandler
     {
-        void Visit(AddPokemonFilterAction action);
-    }
-
-    public class LogVisitVisitor : IActionVisitor
-    {
-        public void Visit(AddPokemonFilterAction action)
+        public Task HandleAsync(AddPokemonFilterAction action)
         {
             Console.WriteLine(action.PokemonName);
+            return null;
         }
     }
 }
