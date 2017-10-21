@@ -11,8 +11,8 @@ namespace GoSentinel.Services
         {
             { AiActionName.ADD_POKEMON_FILTER, r =>
                 {
-                    int v1 = 0;
-                    int? v2 = null;
+                    int v1;
+                    int? v2;
                     try
                     {
                         v1 = int.Parse(r.Result.Parameters["number"].ToString());

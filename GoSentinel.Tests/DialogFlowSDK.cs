@@ -5,6 +5,7 @@ using ApiAiSDK.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GoSentinel.Models;
 
 namespace GoSentinel.Tests
 {
@@ -37,7 +38,7 @@ namespace GoSentinel.Tests
                 "aggiungi rattata lv 30"
             };
             var allResults = queries.Select(q => _apiAi.TextRequest(q));
-            Assert.All(allResults, r => Assert.Equal(r.Result.Action, "ADD_POKEMON_FILTER"));
+            Assert.All(allResults, r => Assert.Equal(r.Result.Action, AiActionName.ADD_POKEMON_FILTER));
         }
     }
 }
