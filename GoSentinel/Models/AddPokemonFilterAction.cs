@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GoSentinel.Bots.Controllers;
 
 namespace GoSentinel.Models
 {
@@ -11,5 +12,10 @@ namespace GoSentinel.Models
         public PokemonStat Stat { get; set; }
         public int ValueMin { get; set; }
         public int? ValueMax { get; set; }
+
+        public void Accept(IActionVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }
