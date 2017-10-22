@@ -58,6 +58,26 @@ namespace GoSentinel.Tests
         }
 
         [Fact]
+        public void Should_Get_Correct_Stat()
+        {
+            var action = (AddPokemonFilterAction)AiResponseToAction.Map(new AIResponse()
+            {
+                Result = new Result()
+                {
+                    Action = AiActionName.ADD_POKEMON_FILTER,
+                    Parameters = new Dictionary<string, object>()
+                    {
+                        { "Pokemon", "Rattata" },
+                        { "PokemonStat", "cp" },
+                        { "number1", 6 },
+                    }
+                }
+            });
+
+            Assert.Equal(PokemonStat.Cp, action.Stat);
+        }
+
+        [Fact]
         public void Should_Get_Null_MaxValue()
         {
             var action = (AddPokemonFilterAction)AiResponseToAction.Map(new AIResponse()

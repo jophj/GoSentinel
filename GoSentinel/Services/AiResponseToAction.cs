@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ApiAiSDK.Model;
 using GoSentinel.Models;
 
@@ -33,8 +34,9 @@ namespace GoSentinel.Services
                     PokemonStat stat;
                     try
                     {
-                        stat = (PokemonStat) Enum.Parse(typeof(PokemonStat),
-                            r.Result.Parameters["PokemonStat"].ToString());
+                        string statName = char.ToUpper(r.Result.Parameters["PokemonStat"].ToString()[0]) +
+                                          r.Result.Parameters["PokemonStat"].ToString().Substring(1);
+                        stat = (PokemonStat) Enum.Parse(typeof(PokemonStat), statName);
                     }
                     catch (Exception)
                     {

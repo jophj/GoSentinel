@@ -21,18 +21,25 @@ namespace GoSentinel.Bots.Controllers
         public async Task OnMessageAsync(IBot bot, Message message)
         {
             var response = _apiAi.TextRequest(message.Text);
-            await bot.SendTextMessageAsync(message.Chat.Id, response.Result.Fulfillment.Speech);
             var action = AiResponseToAction.Map(response);
+            action.Message = message;
             action.Accept(_aiActionHandler);
+            await bot.SendTextMessageAsync(message.Chat.Id, response.Result.Fulfillment.Speech);
         }
     }
 
     public class AiActionHandler : IAiActionHandler
     {
-        public Task HandleAsync(AddPokemonFilterAction action)
+        private readonly IPokemonFilterService _pokemonFilterService;
+
+        public AiActionHandler(IPokemonFilterService pokemonFilterService)
         {
-            Console.WriteLine(action.PokemonName);
-            return null;
+            _pokemonFilterService = pokemonFilterService;
+        }
+
+        public async Task HandleAsync(AddPokemonFilterAction action)
+        {
+            _pokemonFilterService.Add(action);
         }
     }
 }
