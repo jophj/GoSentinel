@@ -43,7 +43,7 @@ namespace GoSentinel.Services
                         stat = PokemonStat.Iv;
                     }
                     
-                    var action = new AddPokemonFilterAction()
+                    var action = new PokemonFilter()
                     {
                         PokemonName = r.Result.Parameters["Pokemon"].ToString(),
                         Stat = stat,

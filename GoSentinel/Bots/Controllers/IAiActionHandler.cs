@@ -5,6 +5,6 @@ namespace GoSentinel.Bots.Controllers
 {
     public interface IAiActionHandler
     {
-        Task HandleAsync(AddPokemonFilterAction action);
+        Task<IAiActionResponse> HandleAsync(PokemonFilter action);
     }
 }

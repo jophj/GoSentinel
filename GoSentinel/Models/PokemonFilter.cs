@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GoSentinel.Bots;
+﻿using System.Threading.Tasks;
 using GoSentinel.Bots.Controllers;
 using Telegram.Bot.Types;
 
 namespace GoSentinel.Models
 {
-    public class AddPokemonFilterAction : IAiAction
+    public class PokemonFilter : IAiAction
     {
+        public string UserId { get; set; }
         public Message Message { get; set; }
         public string PokemonName { get; set; }
         public PokemonStat Stat { get; set; }
         public int ValueMin { get; set; }
         public int? ValueMax { get; set; }
 
-        public void Accept(IAiActionHandler handler)
+        public async Task<IAiActionResponse> Accept(IAiActionHandler handler)
         {
-            handler.HandleAsync(this);
+            return await handler.HandleAsync(this);
         }
     }
 }

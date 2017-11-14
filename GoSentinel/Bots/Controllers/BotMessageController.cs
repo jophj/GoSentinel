@@ -37,9 +37,9 @@ namespace GoSentinel.Bots.Controllers
             _pokemonFilterService = pokemonFilterService;
         }
 
-        public async Task HandleAsync(AddPokemonFilterAction action)
+        public async Task<IAiActionResponse> HandleAsync(PokemonFilter action)
         {
-            _pokemonFilterService.Add(action);
+            return await _pokemonFilterService.Add(action);
         }
     }
 }

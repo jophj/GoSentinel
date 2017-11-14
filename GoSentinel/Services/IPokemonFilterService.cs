@@ -1,9 +1,10 @@
-﻿using GoSentinel.Models;
+﻿using System.Threading.Tasks;
+using GoSentinel.Models;
 
 namespace GoSentinel.Services
 {
     public interface IPokemonFilterService
     {
-        void Add(AddPokemonFilterAction action);
+        Task<IAiActionResponse> Add(PokemonFilter action);
     }
 }
