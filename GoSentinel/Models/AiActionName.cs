@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace GoSentinel.Models
 {
-    public class AddPokemonFilterAction
+    public class AiActionName
     {
-
+        public static readonly string ADD_POKEMON_FILTER = "AddPokemonFilter";
     }
 }

@@ -26,7 +26,7 @@ namespace GoSentinel.Services
         {
             foreach (var bot in _bots)
             {
-                bot.AddMessageHandler(message => botController.OnMessage(bot, message));
+                bot.AddMessageHandler(message => botController.OnMessageAsync(bot, message));
             }
         }
     }

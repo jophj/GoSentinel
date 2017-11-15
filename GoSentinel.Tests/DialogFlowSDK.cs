@@ -5,15 +5,16 @@ using ApiAiSDK.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GoSentinel.Models;
 
 namespace GoSentinel.Tests
 {
-    public class DialogFlowSDK
+    public class DialogFlowSdk
     {
         private AIConfiguration config;
         private readonly ApiAi _apiAi;
 
-        public DialogFlowSDK()
+        public DialogFlowSdk()
         {
             config = new AIConfiguration("7f798b1c53e34efcad868e2e54a95275", SupportedLanguage.Italian);
             _apiAi = new ApiAi(config);
@@ -37,7 +38,7 @@ namespace GoSentinel.Tests
                 "aggiungi rattata lv 30"
             };
             var allResults = queries.Select(q => _apiAi.TextRequest(q));
-            Assert.All(allResults, r => Assert.Equal(r.Result.Action, "AddPokemonFilter"));
+            Assert.All(allResults, r => Assert.Equal(r.Result.Action, AiActionName.ADD_POKEMON_FILTER));
         }
     }
 }
