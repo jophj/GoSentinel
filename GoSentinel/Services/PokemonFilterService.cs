@@ -8,10 +8,13 @@ namespace GoSentinel.Services
 {
     public class LogPokemonFilterService : IPokemonFilterService
     {
-        public async Task<IAiActionResponse> Add(PokemonFilter action)
+        public async Task<IAiActionResponse> Add(PokemonFilterAction action)
         {
             Console.WriteLine($"{action.GetType().Name} - {action.Message.From.Username} - {action.PokemonName} - {action.Stat}");
-            return null;
+            return new AiActionResponse()
+            {
+                Action = action
+            };
         }
     }
 }

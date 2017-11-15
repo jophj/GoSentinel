@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using ApiAiSDK;
+using ApiAiSDK.Model;
 using GoSentinel.Models;
 using GoSentinel.Services;
 using Telegram.Bot.Types;
@@ -20,11 +21,11 @@ namespace GoSentinel.Bots.Controllers
 
         public async Task OnMessageAsync(IBot bot, Message message)
         {
-            var response = _apiAi.TextRequest(message.Text);
-            var action = AiResponseToAction.Map(response);
+            AIResponse aiResponse = _apiAi.TextRequest(message.Text);
+            IAiAction action = AiResponseToAction.Map(aiResponse);
             action.Message = message;
-            action.Accept(_aiActionHandler);
-            await bot.SendTextMessageAsync(message.Chat.Id, response.Result.Fulfillment.Speech);
+            IAiActionResponse actionResponse = await action.Accept(_aiActionHandler);
+            await bot.SendTextMessageAsync(message.Chat.Id, aiResponse.Result.Fulfillment.Speech);
         }
     }
 
@@ -37,7 +38,7 @@ namespace GoSentinel.Bots.Controllers
             _pokemonFilterService = pokemonFilterService;
         }
 
-        public async Task<IAiActionResponse> HandleAsync(PokemonFilter action)
+        public async Task<IAiActionResponse> HandleAsync(PokemonFilterAction action)
         {
             return await _pokemonFilterService.Add(action);
         }

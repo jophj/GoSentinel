@@ -4,7 +4,7 @@ using Telegram.Bot.Types;
 
 namespace GoSentinel.Models
 {
-    public class PokemonFilter : IAiAction
+    public class PokemonFilterAction : IAiAction
     {
         public string UserId { get; set; }
         public Message Message { get; set; }

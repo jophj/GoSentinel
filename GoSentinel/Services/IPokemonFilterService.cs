@@ -5,6 +5,6 @@ namespace GoSentinel.Services
 {
     public interface IPokemonFilterService
     {
-        Task<IAiActionResponse> Add(PokemonFilter action);
+        Task<IAiActionResponse> Add(PokemonFilterAction action);
     }
 }

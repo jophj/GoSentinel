@@ -13,7 +13,7 @@ namespace GoSentinel.Tests
         [Fact]
         public void Should_Map_AddPokemonFilterAction()
         {
-            var action = (PokemonFilter) AiResponseToAction.Map(new AIResponse()
+            var action = (PokemonFilterAction) AiResponseToAction.Map(new AIResponse()
             {
                 Result = new Result()
                 {
@@ -37,7 +37,7 @@ namespace GoSentinel.Tests
         [Fact]
         public void Should_Get_Iv_Default()
         {
-            var action = (PokemonFilter)AiResponseToAction.Map(new AIResponse()
+            var action = (PokemonFilterAction)AiResponseToAction.Map(new AIResponse()
             {
                 Result = new Result()
                 {
@@ -60,7 +60,7 @@ namespace GoSentinel.Tests
         [Fact]
         public void Should_Get_Correct_Stat()
         {
-            var action = (PokemonFilter)AiResponseToAction.Map(new AIResponse()
+            var action = (PokemonFilterAction)AiResponseToAction.Map(new AIResponse()
             {
                 Result = new Result()
                 {
@@ -80,7 +80,7 @@ namespace GoSentinel.Tests
         [Fact]
         public void Should_Get_Null_MaxValue()
         {
-            var action = (PokemonFilter)AiResponseToAction.Map(new AIResponse()
+            var action = (PokemonFilterAction)AiResponseToAction.Map(new AIResponse()
             {
                 Result = new Result()
                 {

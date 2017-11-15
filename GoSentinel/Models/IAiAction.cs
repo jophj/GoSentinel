@@ -16,4 +16,9 @@ namespace GoSentinel.Models
     {
         IAiAction Action { get; set; }
     }
+
+    public class AiActionResponse : IAiActionResponse
+    {
+        public IAiAction Action { get; set; }
+    }
 }
