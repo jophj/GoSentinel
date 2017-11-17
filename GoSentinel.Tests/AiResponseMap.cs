@@ -5,6 +5,7 @@ using ApiAiSDK.Model;
 using GoSentinel.Models;
 using GoSentinel.Services;
 using Xunit;
+using Action = GoSentinel.Models.Action;
 
 namespace GoSentinel.Tests
 {
@@ -17,7 +18,7 @@ namespace GoSentinel.Tests
             {
                 Result = new Result()
                 {
-                    Action = AiActionName.ADD_POKEMON_FILTER,
+                    Action = Action.AddPokemonFilter,
                     Parameters = new Dictionary<string, object>()
                     {
                         { "Pokemon", "Rattata" },
@@ -41,7 +42,7 @@ namespace GoSentinel.Tests
             {
                 Result = new Result()
                 {
-                    Action = AiActionName.ADD_POKEMON_FILTER,
+                    Action = Action.AddPokemonFilter,
                     Parameters = new Dictionary<string, object>()
                     {
                         { "Pokemon", "Rattata" },
@@ -64,7 +65,7 @@ namespace GoSentinel.Tests
             {
                 Result = new Result()
                 {
-                    Action = AiActionName.ADD_POKEMON_FILTER,
+                    Action = Action.AddPokemonFilter,
                     Parameters = new Dictionary<string, object>()
                     {
                         { "Pokemon", "Rattata" },
@@ -84,7 +85,7 @@ namespace GoSentinel.Tests
             {
                 Result = new Result()
                 {
-                    Action = AiActionName.ADD_POKEMON_FILTER,
+                    Action = Action.AddPokemonFilter,
                     Parameters = new Dictionary<string, object>()
                     {
                         { "Pokemon", "Rattata" },

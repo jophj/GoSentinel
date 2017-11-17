@@ -11,36 +11,29 @@ namespace GoSentinel.Bots.Controllers
     public class BotMessageController :  IBotMessageController
     {
         private readonly ApiAi _apiAi;
-        private readonly IAiActionHandler _aiActionHandler;
+        private readonly IActionHandler _actionHandler;
+        private readonly IResponseServiceSelector _responseServiceSelector;
 
-        public BotMessageController(ApiAi apiAi, IAiActionHandler aiActionHandler)
+        public BotMessageController(
+            ApiAi apiAi,
+            IActionHandler actionHandler,
+            IResponseServiceSelector responseServiceSelector
+            )
         {
             _apiAi = apiAi;
-            _aiActionHandler = aiActionHandler;
+            _actionHandler = actionHandler;
+            _responseServiceSelector = responseServiceSelector;
         }
 
         public async Task OnMessageAsync(IBot bot, Message message)
         {
             AIResponse aiResponse = _apiAi.TextRequest(message.Text);
-            IAiAction action = AiResponseToAction.Map(aiResponse);
+            IAction action = AiResponseToAction.Map(aiResponse);
             action.Message = message;
-            IAiActionResponse actionResponse = await action.Accept(_aiActionHandler);
-            await bot.SendTextMessageAsync(message.Chat.Id, aiResponse.Result.Fulfillment.Speech);
-        }
-    }
-
-    public class AiActionHandler : IAiActionHandler
-    {
-        private readonly IPokemonFilterService _pokemonFilterService;
-
-        public AiActionHandler(IPokemonFilterService pokemonFilterService)
-        {
-            _pokemonFilterService = pokemonFilterService;
-        }
-
-        public async Task<IAiActionResponse> HandleAsync(PokemonFilterAction action)
-        {
-            return await _pokemonFilterService.Add(action);
+            IActionResponse actionResponse = await action.Accept(_actionHandler);
+            var actionService = _responseServiceSelector.GetService(actionResponse);
+            string textResponse = actionService.Handle(actionResponse);
+            await bot.SendTextMessageAsync(message.Chat.Id, textResponse);
         }
     }
 }

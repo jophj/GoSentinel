@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using ApiAiSDK.Model;
 using GoSentinel.Models;
+using Action = GoSentinel.Models.Action;
 
 namespace GoSentinel.Services
 {
     public class AiResponseToAction
     {
-        private static readonly IDictionary<string, Func<AIResponse, IAiAction>> ActionMap = new Dictionary<string, Func<AIResponse, IAiAction>>()
+        private static readonly IDictionary<string, Func<AIResponse, IAction>> ActionMap = new Dictionary<string, Func<AIResponse, IAction>>()
         {
-            { AiActionName.ADD_POKEMON_FILTER, r =>
+            { Action.AddPokemonFilter, r =>
                 {
                     int v1;
                     int? v2;
@@ -56,7 +57,7 @@ namespace GoSentinel.Services
             }
         };
 
-        public static IAiAction Map(AIResponse aiResponse)
+        public static IAction Map(AIResponse aiResponse)
         {
             if (aiResponse.IsError)
             {
