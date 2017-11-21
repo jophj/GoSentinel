@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using GoSentinel.Bots.Controllers;
 using GoSentinel.Services;
 using GoSentinel.Models;
+using GoSentinel.Services.ActionMappings;
+using GoSentinel.Services.ActionResponse;
 
 namespace GoSentinel
 {
@@ -35,6 +37,10 @@ namespace GoSentinel
             services.AddSingleton<IPokemonFilterActionService, LogPokemonFilterActionService>();
 
             services.AddSingleton<IBotMessageController, BotMessageController>();
+            services.AddSingleton<AiResponseToActionService, AiResponseToActionService>();
+
+            services.AddSingleton<PokemonFilterMapping, PokemonFilterMapping>();
+            services.AddSingleton<NearestPokemonMapping, NearestPokemonMapping>();
 
             var apiAiConfig = Configuration.GetSection("ApiAiConfiguration").Get<ApiAiConfiguration>();
             var config =

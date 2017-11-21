@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using GoSentinel.Models;
 using GoSentinel.Services;
+using GoSentinel.Services.ActionMappings;
 
 namespace GoSentinel.Bots.Controllers
 {
@@ -16,6 +17,11 @@ namespace GoSentinel.Bots.Controllers
         public async Task<IActionResponse> HandleAsync(PokemonFilterAction action)
         {
             return await _pokemonFilterActionService.Add(action);
+        }
+
+        public Task<IActionResponse> HandleAsync(NearestPokemonAction action)
+        {
+            return null; //TODO
         }
     }
 

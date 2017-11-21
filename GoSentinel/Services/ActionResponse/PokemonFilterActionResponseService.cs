@@ -1,6 +1,6 @@
 ﻿using GoSentinel.Models;
 
-namespace GoSentinel.Services
+namespace GoSentinel.Services.ActionResponse
 {
     public class PokemonFilterActionResponseService : IActionResponseService<PokemonFilterActionResponse>
     {

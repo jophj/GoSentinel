@@ -1,20 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using ApiAiSDK.Model;
 using GoSentinel.Models;
-using GoSentinel.Services;
+using GoSentinel.Services.ActionMappings;
 using Xunit;
 using Action = GoSentinel.Models.Action;
 
 namespace GoSentinel.Tests
 {
-    public class AiResponseMap
+    public class PokemonFilterMappingTests
     {
+        private PokemonFilterMapping _pokemonFilterMapping;
+
+        public PokemonFilterMappingTests()
+        {
+            _pokemonFilterMapping = new PokemonFilterMapping();
+        }
+
         [Fact]
         public void Should_Map_AddPokemonFilterAction()
         {
-            var action = (PokemonFilterAction) AiResponseToAction.Map(new AIResponse()
+            var action = (PokemonFilterAction)_pokemonFilterMapping.Map(new AIResponse()
             {
                 Result = new Result()
                 {
@@ -38,7 +43,7 @@ namespace GoSentinel.Tests
         [Fact]
         public void Should_Get_Iv_Default()
         {
-            var action = (PokemonFilterAction)AiResponseToAction.Map(new AIResponse()
+            var action = _pokemonFilterMapping.Map(new AIResponse()
             {
                 Result = new Result()
                 {
@@ -61,7 +66,7 @@ namespace GoSentinel.Tests
         [Fact]
         public void Should_Get_Correct_Stat()
         {
-            var action = (PokemonFilterAction)AiResponseToAction.Map(new AIResponse()
+            var action = _pokemonFilterMapping.Map(new AIResponse()
             {
                 Result = new Result()
                 {
@@ -81,7 +86,7 @@ namespace GoSentinel.Tests
         [Fact]
         public void Should_Get_Null_MaxValue()
         {
-            var action = (PokemonFilterAction)AiResponseToAction.Map(new AIResponse()
+            var action = _pokemonFilterMapping.Map(new AIResponse()
             {
                 Result = new Result()
                 {
@@ -96,7 +101,7 @@ namespace GoSentinel.Tests
 
             Assert.Equal("Rattata", action.PokemonName);
             Assert.Equal(PokemonStat.Iv, action.Stat);
-            Assert.Equal(null, action.ValueMax);
+            Assert.Null(action.ValueMax);
             Assert.Equal(4, action.ValueMin);
         }
     }
