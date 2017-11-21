@@ -9,7 +9,7 @@ namespace GoSentinel.Tests
 {
     public class PokemonFilterMappingTests
     {
-        private PokemonFilterMapping _pokemonFilterMapping;
+        private readonly PokemonFilterMapping _pokemonFilterMapping;
 
         public PokemonFilterMappingTests()
         {

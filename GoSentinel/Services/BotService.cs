@@ -9,7 +9,7 @@ namespace GoSentinel.Services
 {
     class BotService : IBotService
     {
-        private ICollection<IBot> _bots;
+        private readonly ICollection<IBot> _bots;
 
         public BotService()
         {
