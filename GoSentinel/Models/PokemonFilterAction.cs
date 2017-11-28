@@ -9,10 +9,8 @@
         public int? ValueMax { get; set; }
     }
 
-    public class PokemonFilterActionResponse : IPokemonFilterActionResponse {
-        public IAction Action { get; set; }
+    public class PokemonFilterActionResponse : IActionResponse<PokemonFilterAction>
+    {
+        public PokemonFilterAction Action { get; set; }
     }
-
-    public interface IPokemonFilterActionResponse : IActionResponse
-    {}
 }

@@ -16,4 +16,9 @@ namespace GoSentinel.Models
         public Message Message { get; set; }
         public string PokemonName { get; set; }
     }
+
+    public class NearestPokemonActionResponse : IActionResponse<NearestPokemonAction>
+    {
+        public NearestPokemonAction Action { get; set; }
+    }
 }
