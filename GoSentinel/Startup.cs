@@ -33,6 +33,7 @@ namespace GoSentinel
             services.AddSingleton<IBotService, BotService>();
             services.AddSingleton<IResponseServiceSelector, ResponseServiceSelector>();
             services.AddSingleton<IActionHandler, ActionHandler>();
+            services.AddSingleton<IActionController<PokemonFilterAction>, PokemonFilterActionController>();
             services.AddSingleton<IActionResponseService<PokemonFilterActionResponse>, PokemonFilterActionResponseService>();
             services.AddSingleton<IPokemonFilterActionService, LogPokemonFilterActionService>();
 
