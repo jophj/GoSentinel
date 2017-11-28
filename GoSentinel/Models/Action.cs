@@ -12,7 +12,5 @@ namespace GoSentinel.Models
         public abstract string Name { get; }
         public string UserId { get; set; }
         public Message Message { get; set; }
-
-        public abstract Task<IActionResponse> Accept(IActionHandler handler);
     }
 }

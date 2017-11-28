@@ -15,10 +15,5 @@ namespace GoSentinel.Models
         public string UserId { get; set; }
         public Message Message { get; set; }
         public string PokemonName { get; set; }
-
-        public async Task<IActionResponse> Accept(IActionHandler handler)
-        {
-            return await handler.HandleAsync(this);
-        }
     }
 }

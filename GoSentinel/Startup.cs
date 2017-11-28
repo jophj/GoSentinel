@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using GoSentinel.Bots.Controllers;
 using GoSentinel.Services;
 using GoSentinel.Models;
+using GoSentinel.Services.Actions;
 using GoSentinel.Services.ActionMappings;
 using GoSentinel.Services.ActionResponse;
 
@@ -32,7 +33,6 @@ namespace GoSentinel
             services.AddSingleton(Configuration.GetSection("BotConfiguration").GetSection("Telegram").Get<TelegramBotConfiguration>());
             services.AddSingleton<IBotService, BotService>();
             services.AddSingleton<IResponseServiceSelector, ResponseServiceSelector>();
-            services.AddSingleton<IActionHandler, ActionHandler>();
             services.AddSingleton<IActionController<PokemonFilterAction>, PokemonFilterActionController>();
             services.AddSingleton<IActionResponseService<PokemonFilterActionResponse>, PokemonFilterActionResponseService>();
             services.AddSingleton<IPokemonFilterActionService, LogPokemonFilterActionService>();
