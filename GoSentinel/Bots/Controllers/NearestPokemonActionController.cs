@@ -7,9 +7,14 @@ namespace GoSentinel.Bots.Controllers
     {
         public IActionResponse Handle(IAction baseAction)
         {
+            if (baseAction == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             if (!(baseAction is NearestPokemonAction action))
             {
-                throw new NullReferenceException();
+                throw new ArgumentException();
             }
 
             Console.WriteLine($"{action.GetType().Name} - {action.Message.From.Username} - {action.PokemonName}");
