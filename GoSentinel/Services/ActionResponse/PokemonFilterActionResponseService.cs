@@ -2,7 +2,7 @@
 
 namespace GoSentinel.Services.ActionResponse
 {
-    public class PokemonFilterActionResponseService : IActionResponseService<PokemonFilterActionResponse>
+    public class PokemonFilterActionResponseService
     {
         public string Handle(IActionResponse actionResponse)
         {

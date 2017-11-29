@@ -17,13 +17,4 @@ namespace GoSentinel.Bots.Controllers
             return _pokemonFilterActionService.Add(action as PokemonFilterAction).Result;
         }
     }
-
-    public class PokemonFilterActionResponseController : IActionResponseController<PokemonFilterActionResponse>
-    {
-        public void Handle(IBot bot, IActionResponse actionResponse)
-        {
-
-            throw new System.NotImplementedException();
-        }
-    }
 }
