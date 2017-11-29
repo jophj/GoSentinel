@@ -4,14 +4,9 @@ namespace GoSentinel.Bots.Controllers
 {
     public interface IActionResponseController
     {
-        IActionResponse Handle(IAction action);
+        void Handle(IBot bot, IActionResponse actionResponse);
     }
 
     public interface IActionResponseController<T> : IActionResponseController where T : IActionResponse
     { }
-
-    public interface IActionResponseHandler
-    {
-        string Handle(PokemonFilterActionResponse actionResponse);
-    }
 }
