@@ -1,9 +1,10 @@
-﻿using GoSentinel.Bots.Controllers;
-
-namespace GoSentinel.Models
+﻿namespace GoSentinel.Models
 {
-    public interface IActionResponse
+    public interface IActionResponse<T> : IActionResponse where T : IAction
     {
-        IAction Action { get; set; }
+        T Action { get; set; }
     }
+
+    public interface IActionResponse
+    {}
 }

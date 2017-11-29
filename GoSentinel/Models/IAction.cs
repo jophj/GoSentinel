@@ -10,6 +10,5 @@ namespace GoSentinel.Models
         string Name { get; }
         string UserId { get; set; }
         Message Message { get; set; }
-        Task<IActionResponse> Accept(IActionHandler handler);
     }
 }

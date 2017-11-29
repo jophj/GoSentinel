@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using GoSentinel.Bots.Controllers;
 using GoSentinel.Models;
 
-namespace GoSentinel.Services
+namespace GoSentinel.Services.Actions
 {
+    public interface IPokemonFilterActionService
+    {
+        Task<IActionResponse> Add(PokemonFilterAction action);
+    }
+
     public class LogPokemonFilterActionService : IPokemonFilterActionService
     {
         public async Task<IActionResponse> Add(PokemonFilterAction action)

@@ -1,30 +1,26 @@
 using System;
 using Xunit;
 using ApiAiSDK;
-using ApiAiSDK.Model;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using GoSentinel.Models;
 using Action = GoSentinel.Models.Action;
 
 namespace GoSentinel.Tests
 {
     public class DialogFlowSdk
     {
-        private AIConfiguration config;
         private readonly ApiAi _apiAi;
 
         public DialogFlowSdk()
         {
-            config = new AIConfiguration("7f798b1c53e34efcad868e2e54a95275", SupportedLanguage.Italian);
+            var config = new AIConfiguration("7f798b1c53e34efcad868e2e54a95275", SupportedLanguage.Italian);
             _apiAi = new ApiAi(config);
         }
         [Fact]
         public void Should_return_200()
         {
             var response = _apiAi.TextRequest("aggiungi rattata cp 1200");
-            Assert.Equal(response.Status.Code, 200);
+            Assert.Equal(200, response.Status.Code);
         }
 
         [Fact]
