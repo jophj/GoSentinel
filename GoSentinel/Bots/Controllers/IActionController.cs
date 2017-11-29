@@ -8,5 +8,5 @@ namespace GoSentinel.Bots.Controllers
     }
 
     public interface IActionController<T> : IActionController where T : IAction
-    {}
+    { }
 }

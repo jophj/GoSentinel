@@ -7,6 +7,6 @@ namespace GoSentinel.Bots.Controllers
 {
     public interface IBotMessageController
     {
-        Task OnMessageAsync(IBot bot, Message message);
+        void OnMessage(IBot bot, Message message);
     }
 }
