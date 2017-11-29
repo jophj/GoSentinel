@@ -37,6 +37,7 @@ namespace GoSentinel.Bots.Controllers
             Type actionControllerGenericType = typeof(IActionController<>).MakeGenericType(action.GetType());
             IActionController actionController = (IActionController)_serviceProvider.GetService(actionControllerGenericType);
             IActionResponse actionResponse = actionController?.Handle(action);
+
             var actionService = _responseServiceSelector.GetService(actionResponse);
             string textResponse = actionService.Handle(actionResponse);
             await bot.SendTextMessageAsync(message.Chat.Id, textResponse);
