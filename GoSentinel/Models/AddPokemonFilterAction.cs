@@ -9,7 +9,7 @@
         public int? ValueMax { get; set; }
     }
 
-    public class PokemonFilterActionResponse : IActionResponse<AddPokemonFilterAction>
+    public class AddPokemonFilterActionResponse : IActionResponse<AddPokemonFilterAction>
     {
         public AddPokemonFilterAction Action { get; set; }
     }

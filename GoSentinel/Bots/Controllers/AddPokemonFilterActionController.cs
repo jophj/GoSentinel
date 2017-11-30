@@ -1,4 +1,5 @@
-﻿using GoSentinel.Models;
+﻿using System;
+using GoSentinel.Models;
 using GoSentinel.Services.Actions;
 
 namespace GoSentinel.Bots.Controllers
@@ -12,9 +13,19 @@ namespace GoSentinel.Bots.Controllers
             _pokemonFilterActionService = pokemonFilterActionService;
         }
 
-        public IActionResponse Handle(IAction action)
+        public IActionResponse Handle(IAction baseAction)
         {
-            return _pokemonFilterActionService.Add(action as AddPokemonFilterAction).Result;
+            if (baseAction == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (!(baseAction is AddPokemonFilterAction action))
+            {
+                throw new ArgumentException();
+            }
+
+            return _pokemonFilterActionService.Add(action).Result;
         }
     }
 }

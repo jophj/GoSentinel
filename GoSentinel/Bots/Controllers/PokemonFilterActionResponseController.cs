@@ -3,11 +3,11 @@ using GoSentinel.Models;
 
 namespace GoSentinel.Bots.Controllers
 {
-    public class PokemonFilterActionResponseController : IActionResponseController<PokemonFilterActionResponse>
+    public class PokemonFilterActionResponseController : IActionResponseController<AddPokemonFilterActionResponse>
     {
         public void Handle(IBot bot, IActionResponse actionResponseBase)
         {
-            if (!(actionResponseBase is PokemonFilterActionResponse actionResponse))
+            if (!(actionResponseBase is AddPokemonFilterActionResponse actionResponse))
             {
                 throw new ArgumentNullException();
             }

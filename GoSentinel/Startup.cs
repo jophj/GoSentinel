@@ -36,7 +36,7 @@ namespace GoSentinel
             services.AddSingleton<IActionController<AddPokemonFilterAction>, AddPokemonFilterActionController>();
             services.AddSingleton<IActionController<NearestPokemonAction>, NearestPokemonActionController>();
 
-            services.AddSingleton<IActionResponseController<PokemonFilterActionResponse>, PokemonFilterActionResponseController>();
+            services.AddSingleton<IActionResponseController<AddPokemonFilterActionResponse>, PokemonFilterActionResponseController>();
             services.AddSingleton<IActionResponseController<NearestPokemonActionResponse>, NearestPokemonActionResponseController>();
 
             services.AddSingleton<PokemonFilterActionResponseService, PokemonFilterActionResponseService>();
