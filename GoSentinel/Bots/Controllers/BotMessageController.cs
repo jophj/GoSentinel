@@ -3,7 +3,7 @@ using System.Data;
 using System.Threading.Tasks;
 using ApiAiSDK;
 using ApiAiSDK.Model;
-using GoSentinel.Models;
+using GoSentinel.Data;
 using GoSentinel.Services;
 using GoSentinel.Services.ActionMappings;
 using Telegram.Bot.Types;

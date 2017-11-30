@@ -3,7 +3,7 @@ using Xunit;
 using ApiAiSDK;
 using System.Collections.Generic;
 using System.Linq;
-using Action = GoSentinel.Models.Action;
+using Action = GoSentinel.Data.Action;
 
 namespace GoSentinel.Tests
 {

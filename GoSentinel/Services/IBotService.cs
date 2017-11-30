@@ -1,6 +1,6 @@
 ﻿using System;
 using GoSentinel.Bots.Controllers;
-using GoSentinel.Models;
+using GoSentinel.Data;
 using Telegram.Bot.Types;
 
 namespace GoSentinel.Services

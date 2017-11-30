@@ -1,8 +1,6 @@
-﻿using System.Threading.Tasks;
-using GoSentinel.Bots.Controllers;
-using Telegram.Bot.Types;
+﻿using Telegram.Bot.Types;
 
-namespace GoSentinel.Models
+namespace GoSentinel.Data
 {
     public abstract class Action : IAction
     {

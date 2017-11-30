@@ -1,5 +1,5 @@
 ﻿using System;
-using GoSentinel.Models;
+using GoSentinel.Data;
 using GoSentinel.Services.Actions;
 
 namespace GoSentinel.Bots.Controllers

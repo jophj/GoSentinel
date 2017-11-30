@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using GoSentinel.Models;
+using GoSentinel.Data;
 
 namespace GoSentinel.Services.Actions
 {

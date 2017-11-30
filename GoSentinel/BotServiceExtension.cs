@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApiAiSDK;
 using GoSentinel.Bots.Controllers;
-using GoSentinel.Models;
+using GoSentinel.Data;
 using GoSentinel.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;

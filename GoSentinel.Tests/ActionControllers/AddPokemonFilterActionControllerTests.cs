@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using GoSentinel.Bots.Controllers;
-using GoSentinel.Models;
+using GoSentinel.Data;
 using GoSentinel.Services.Actions;
 using Telegram.Bot.Types;
 using Xunit;

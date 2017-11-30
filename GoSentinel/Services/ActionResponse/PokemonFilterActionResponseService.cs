@@ -1,4 +1,4 @@
-﻿using GoSentinel.Models;
+﻿using GoSentinel.Data;
 
 namespace GoSentinel.Services.ActionResponse
 {

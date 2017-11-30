@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using ApiAiSDK.Model;
-using GoSentinel.Models;
+using GoSentinel.Data;
 using GoSentinel.Services.ActionMappings;
 using Xunit;
-using Action = GoSentinel.Models.Action;
+using Action = GoSentinel.Data.Action;
 
 namespace GoSentinel.Tests
 {

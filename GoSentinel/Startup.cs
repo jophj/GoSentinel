@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using GoSentinel.Bots.Controllers;
 using GoSentinel.Services;
-using GoSentinel.Models;
+using GoSentinel.Data;
 using GoSentinel.Services.Actions;
 using GoSentinel.Services.ActionMappings;
 using GoSentinel.Services.ActionResponse;

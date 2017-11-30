@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using ApiAiSDK.Model;
-using GoSentinel.Models;
-using Action = GoSentinel.Models.Action;
+using GoSentinel.Data;
+using Action = GoSentinel.Data.Action;
 
 namespace GoSentinel.Services.ActionMappings
 {

@@ -1,4 +1,4 @@
-﻿namespace GoSentinel.Models
+﻿namespace GoSentinel.Data
 {
     public class AddPokemonFilterAction : Action
     {

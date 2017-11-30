@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GoSentinel.Models
+namespace GoSentinel.Data
 {
     public class ApiAiConfiguration
     {
