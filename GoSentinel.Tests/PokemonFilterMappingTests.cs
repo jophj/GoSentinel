@@ -19,7 +19,7 @@ namespace GoSentinel.Tests
         [Fact]
         public void Should_Map_AddPokemonFilterAction()
         {
-            var action = (PokemonFilterAction)_pokemonFilterMapping.Map(new AIResponse()
+            var action = (AddPokemonFilterAction)_pokemonFilterMapping.Map(new AIResponse()
             {
                 Result = new Result()
                 {

@@ -1,6 +1,6 @@
 ﻿namespace GoSentinel.Models
 {
-    public class PokemonFilterAction : Action
+    public class AddPokemonFilterAction : Action
     {
         public override string Name => AddPokemonFilter;
         public string PokemonName { get; set; }
@@ -9,8 +9,8 @@
         public int? ValueMax { get; set; }
     }
 
-    public class PokemonFilterActionResponse : IActionResponse<PokemonFilterAction>
+    public class PokemonFilterActionResponse : IActionResponse<AddPokemonFilterAction>
     {
-        public PokemonFilterAction Action { get; set; }
+        public AddPokemonFilterAction Action { get; set; }
     }
 }
