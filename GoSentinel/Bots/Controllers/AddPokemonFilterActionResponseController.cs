@@ -3,7 +3,7 @@ using GoSentinel.Data;
 
 namespace GoSentinel.Bots.Controllers
 {
-    public class PokemonFilterActionResponseController : IActionResponseController<AddPokemonFilterActionResponse>
+    public class AddPokemonFilterActionResponseController : IActionResponseController<AddPokemonFilterActionResponse>
     {
         public void Handle(IBot bot, IActionResponse actionResponseBase)
         {
