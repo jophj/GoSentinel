@@ -11,7 +11,7 @@ namespace GoSentinel.Services.ActionMappings
         public AddPokemonFilterAction Map(AIResponse r)
         {
             {
-                int v1;
+                int? v1;
                 int? v2;
                 try
                 {
@@ -19,7 +19,7 @@ namespace GoSentinel.Services.ActionMappings
                 }
                 catch (Exception)
                 {
-                    v1 = 0;
+                    v1 = null;
                 }
                 try
                 {
@@ -46,8 +46,8 @@ namespace GoSentinel.Services.ActionMappings
                 {
                     PokemonName = r.Result.Parameters["Pokemon"].ToString(),
                     Stat = stat,
-                    ValueMin = v2 != null ? Math.Min(v1, v2.Value) : v1,
-                    ValueMax = v2 != null ? Math.Max(v1, v2.Value) : (int?)null
+                    ValueMin = v1 != null && v2 != null ? Math.Min(v1.Value, v2.Value) : v1 ?? v2,
+                    ValueMax = v1 != null && v2 != null ? Math.Max(v1.Value, v2.Value) : (int?)null
                 };
 
                 return action;

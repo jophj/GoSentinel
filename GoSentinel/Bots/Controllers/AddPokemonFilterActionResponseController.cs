@@ -9,11 +9,25 @@ namespace GoSentinel.Bots.Controllers
         {
             if (!(actionResponseBase is AddPokemonFilterActionResponse actionResponse))
             {
-                throw new ArgumentNullException();
+                throw new ArgumentException();
             }
 
             var action = actionResponse.Action;
-            var msg = $"{action.GetType().Name} - {action.Message.From.Username} - {action.PokemonName} - {action.Stat} - {action.ValueMin } - {action.ValueMax}";
+            var statMsg = "";
+            if (action.ValueMin != null || action.ValueMax != null)
+            {
+                statMsg = $"{action.Stat}";
+                if (action.ValueMin != null)
+                {
+                    statMsg += $"min: {action.ValueMin}";
+                }
+                if (action.ValueMax != null)
+                {
+                    statMsg += $"max: {action.ValueMax}";
+                }
+            }
+            
+            var msg = $"{action.PokemonName} ({statMsg}) aggiunto alle notifiche";
             bot.SendTextMessageAsync(actionResponse.Action.Message.Chat.Id, msg);
         }
     }

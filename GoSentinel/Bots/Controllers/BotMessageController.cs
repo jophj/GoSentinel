@@ -29,7 +29,7 @@ namespace GoSentinel.Bots.Controllers
 
         public void OnMessage(IBot bot, Message message)
         {
-            AIResponse aiResponse = _apiAi.TextRequest(message.Text);
+            AIResponse aiResponse = _apiAi.TextRequest(message.Text ?? "wi");
             IAction action = _aiResponseToActionService.Map(aiResponse);
             action.Message = message;
             Type actionControllerGenericType = typeof(IActionController<>).MakeGenericType(action.GetType());
