@@ -9,29 +9,29 @@ using Xunit;
 
 namespace GoSentinel.Tests.ActionControllers
 {
-    public class AddPokemonFilterActionControllerTests
+    public class AddPokemonFilterActionController
     {
-        private AddPokemonFilterActionController _controller;
+        private readonly Bots.Controllers.AddPokemonFilterActionController _controller;
 
-        public AddPokemonFilterActionControllerTests()
+        public AddPokemonFilterActionController()
         {
-            _controller = new AddPokemonFilterActionController(new LogPokemonFilterActionService());
+            _controller = new Bots.Controllers.AddPokemonFilterActionController(new LogPokemonFilterActionService());
         }
 
         [Fact]
-        public void Should_Throw_When_Argument_Null()
+        public void WhenArgumentNull_ShouldThrowArgumentNullException()
         {
             Assert.Throws<ArgumentNullException>(() => _controller.Handle(null));
         }
 
         [Fact]
-        public void Should_Throw_When_Action_Invalid()
+        public void WhenActionIsWrongType_ShouldThrowArgumentException()
         {
             Assert.Throws<ArgumentException>(() => _controller.Handle(new NearestPokemonAction()));
         }
 
         [Fact]
-        public void Should_Return_Correct_ActionResponse()
+        public void HandleCall_ShouldReturnAddPokemonFilterActionResponse()
         {
             var response = _controller.Handle(new AddPokemonFilterAction()
             {
