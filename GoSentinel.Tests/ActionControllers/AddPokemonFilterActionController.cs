@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GoSentinel.Bots.Controllers;
 using GoSentinel.Data;
 using GoSentinel.Services.Actions;
 using Telegram.Bot.Types;
@@ -19,19 +16,19 @@ namespace GoSentinel.Tests.ActionControllers
         }
 
         [Fact]
-        public void WhenArgumentNull_ShouldThrowArgumentNullException()
+        public void Handle_WithNullArgument_ShouldThrowArgumentNullException()
         {
             Assert.Throws<ArgumentNullException>(() => _controller.Handle(null));
         }
 
         [Fact]
-        public void WhenActionIsWrongType_ShouldThrowArgumentException()
+        public void Handle_WithWrongTypeAction_ShouldThrowArgumentException()
         {
             Assert.Throws<ArgumentException>(() => _controller.Handle(new NearestPokemonAction()));
         }
 
         [Fact]
-        public void HandleCall_ShouldReturnAddPokemonFilterActionResponse()
+        public void Handle_WhenCalled_ShouldReturnAddPokemonFilterActionResponseType()
         {
             var response = _controller.Handle(new AddPokemonFilterAction()
             {
@@ -45,6 +42,28 @@ namespace GoSentinel.Tests.ActionControllers
             });
             var typedResponse = response as AddPokemonFilterActionResponse;
             Assert.NotNull(typedResponse);
+        }
+
+        [Fact]
+        public void ActionResponse_WhenReturned_ShouldContainAction()
+        {
+            var action = new AddPokemonFilterAction()
+            {
+                Stat = PokemonStat.Iv,
+                ValueMin = 99,
+                PokemonName = "Charmander",
+                ValueMax = 100,
+                Message = new Message()
+                {
+                    From = new User()
+                    {
+                        Username = "xUnit"
+                    }
+                }
+            };
+            var response = _controller.Handle(action) as AddPokemonFilterActionResponse;
+
+            Assert.Equal(action, response.Action);
         }
     }
 }
