@@ -9,7 +9,7 @@ namespace GoSentinel.Bots.Controllers
         {
             if (!(actionResponseBase is AddPokemonFilterActionResponse actionResponse))
             {
-                throw new ArgumentException();
+                throw new ArgumentException("Action response incorrect type");
             }
 
             var action = actionResponse.Action;

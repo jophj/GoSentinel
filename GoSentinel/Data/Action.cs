@@ -8,7 +8,6 @@ namespace GoSentinel.Data
         public static readonly string NearestPokemon = "NearestPokemon";
 
         public abstract string Name { get; }
-        public string UserId { get; set; }
         public Message Message { get; set; }
     }
 }
