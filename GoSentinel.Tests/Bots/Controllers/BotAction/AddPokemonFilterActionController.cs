@@ -63,7 +63,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotAction
             };
             var response = _controller.Handle(action) as AddPokemonFilterActionResponse;
 
-            Assert.Equal(action, response.BotAction);
+            Assert.Equal(action, response.Action);
         }
     }
 }

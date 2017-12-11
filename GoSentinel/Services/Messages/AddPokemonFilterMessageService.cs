@@ -7,7 +7,7 @@ namespace GoSentinel.Services.Messages
     {
         public string Generate(AddPokemonFilterActionResponse actionResponse)
         {
-            var action = actionResponse.BotAction;
+            var action = actionResponse.Action;
             var statMsg = "";
             if (action.ValueMin != null || action.ValueMax != null)
             {

@@ -16,7 +16,7 @@ namespace GoSentinel.Services.Actions
             Console.WriteLine($"{botAction.GetType().Name} - {botAction.Message.From.Username} - {botAction.PokemonName} - {botAction.Stat}");
             return new AddPokemonFilterActionResponse()
             {
-                BotAction = botAction
+                Action = botAction
             };
         }
     }

@@ -38,7 +38,7 @@ namespace GoSentinel.Bots.Controllers
 
             if (actionResponse == null)
             {
-                throw new ApplicationException("BotAction response should is null");
+                throw new ApplicationException("Action response should is null");
             }
 
             Type actionResponseControllerGenericType = typeof(IActionResponseController<>).MakeGenericType(actionResponse.GetType());

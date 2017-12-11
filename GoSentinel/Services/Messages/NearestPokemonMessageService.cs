@@ -6,7 +6,7 @@ namespace GoSentinel.Services.Messages
     {
         public string Generate(NearestPokemonActionResponse actionResponse)
         {
-            throw new System.NotImplementedException();
+            return "";
         }
     }
 }

@@ -20,7 +20,7 @@ namespace GoSentinel.Bots.Controllers.BotAction
             Console.WriteLine($"{action.GetType().Name} - {action.Message.From.Username} - {action.PokemonName}");
             return new NearestPokemonActionResponse()
             {
-                BotAction = action
+                Action = action
             };
         }
     }

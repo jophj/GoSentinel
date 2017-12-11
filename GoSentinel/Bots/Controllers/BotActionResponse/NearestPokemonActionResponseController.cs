@@ -26,7 +26,7 @@ namespace GoSentinel.Bots.Controllers.BotActionResponse
             }
 
             var msg = _messageService.Generate(actionResponse);
-            bot.SendTextMessageAsync(actionResponse.BotAction.Message.Chat.Id, msg);
+            bot.SendTextMessageAsync(actionResponse.Action.Message.Chat.Id, msg);
         }
     }
 }

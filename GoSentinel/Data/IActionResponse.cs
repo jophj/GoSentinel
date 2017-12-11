@@ -2,7 +2,7 @@
 {
     public interface IActionResponse<T> : IActionResponse where T : IAction
     {
-        T BotAction { get; set; }
+        T Action { get; set; }
     }
 
     public interface IActionResponse

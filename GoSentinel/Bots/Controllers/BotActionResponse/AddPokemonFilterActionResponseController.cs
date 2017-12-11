@@ -17,11 +17,11 @@ namespace GoSentinel.Bots.Controllers.BotActionResponse
         {
             if (!(actionResponseBase is AddPokemonFilterActionResponse actionResponse))
             {
-                throw new ArgumentException("BotAction response incorrect type");
+                throw new ArgumentException("Action response incorrect type");
             }
 
             var msg = _messageService.Generate(actionResponse);
-            bot.SendTextMessageAsync(actionResponse.BotAction.Message.Chat.Id, msg);
+            bot.SendTextMessageAsync(actionResponse.Action.Message.Chat.Id, msg);
         }
     }
 }

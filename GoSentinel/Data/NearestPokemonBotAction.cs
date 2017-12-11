@@ -8,6 +8,6 @@
 
     public class NearestPokemonActionResponse : IActionResponse<NearestPokemonBotAction>
     {
-        public NearestPokemonBotAction BotAction { get; set; }
+        public NearestPokemonBotAction Action { get; set; }
     }
 }

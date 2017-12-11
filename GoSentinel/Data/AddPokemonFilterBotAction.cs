@@ -11,6 +11,6 @@
 
     public class AddPokemonFilterActionResponse : IActionResponse<AddPokemonFilterBotAction>
     {
-        public AddPokemonFilterBotAction BotAction { get; set; }
+        public AddPokemonFilterBotAction Action { get; set; }
     }
 }
