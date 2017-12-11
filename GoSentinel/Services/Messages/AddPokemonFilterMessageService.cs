@@ -1,4 +1,5 @@
 ﻿using GoSentinel.Data;
+using GoSentinel.Services.Messages;
 
 namespace GoSentinel.Services.Messages
 {

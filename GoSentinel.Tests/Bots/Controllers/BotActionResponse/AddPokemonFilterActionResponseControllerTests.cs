@@ -31,7 +31,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
         }
 
         [Fact]
-        public void Handle_WhenCalled_ShouldCallSendTextMessageAsync()
+        public void Handle_WithCorrectActionResponse_ShouldCallSendTextMessageAsync()
         {
             var actionResponse = MakeActionResponse();
             var botMock = new Mock<IBot>();
