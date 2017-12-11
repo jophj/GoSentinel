@@ -3,11 +3,11 @@ using GoSentinel.Data;
 
 namespace GoSentinel.Services.ActionMappings
 {
-    public class NearestPokemonMapping : IAiResponseMapper<NearestPokemonAction>
+    public class NearestPokemonMapping : IAiResponseMapper<NearestPokemonBotAction>
     {
-        public NearestPokemonAction Map(AIResponse response)
+        public NearestPokemonBotAction Map(AIResponse response)
         {
-            return new NearestPokemonAction()
+            return new NearestPokemonBotAction()
             {
                 PokemonName = response.Result.Parameters["Pokemon"].ToString(),
             };

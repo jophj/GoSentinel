@@ -1,7 +1,7 @@
 ﻿using System;
 using GoSentinel.Data;
 
-namespace GoSentinel.Bots.Controllers
+namespace GoSentinel.Bots.Controllers.BotActionResponse
 {
     public class AddPokemonFilterActionResponseController : IActionResponseController<AddPokemonFilterActionResponse>
     {
@@ -9,10 +9,10 @@ namespace GoSentinel.Bots.Controllers
         {
             if (!(actionResponseBase is AddPokemonFilterActionResponse actionResponse))
             {
-                throw new ArgumentException("Action response incorrect type");
+                throw new ArgumentException("BotAction response incorrect type");
             }
 
-            var action = actionResponse.Action;
+            var action = actionResponse.BotAction;
             var statMsg = "";
             if (action.ValueMin != null || action.ValueMax != null)
             {
@@ -28,7 +28,7 @@ namespace GoSentinel.Bots.Controllers
             }
             
             var msg = $"{action.PokemonName} ({statMsg}) aggiunto alle notifiche";
-            bot.SendTextMessageAsync(actionResponse.Action.Message.Chat.Id, msg);
+            bot.SendTextMessageAsync(actionResponse.BotAction.Message.Chat.Id, msg);
         }
     }
 }

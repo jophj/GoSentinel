@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Threading.Tasks;
 using GoSentinel.Bots;
-using GoSentinel.Bots.Controllers;
+using GoSentinel.Bots.Controllers.BotActionResponse;
 using GoSentinel.Data;
 using Moq;
 using Telegram.Bot.Types;
 using Xunit;
 
-namespace GoSentinel.Tests.ActionResponseControllers
+namespace GoSentinel.Tests.Bots.Controllers.ActionResponseControllers
 {
     public class AddPokemonFilterActionResponseControllerTests
     {
@@ -45,7 +44,7 @@ namespace GoSentinel.Tests.ActionResponseControllers
         {
             return new AddPokemonFilterActionResponse()
             {
-                Action = new AddPokemonFilterAction()
+                BotAction = new AddPokemonFilterBotAction()
                 {
                     Stat = PokemonStat.Iv,
                     ValueMin = 98,

@@ -4,15 +4,15 @@ using GoSentinel.Services.Actions;
 using Telegram.Bot.Types;
 using Xunit;
 
-namespace GoSentinel.Tests.ActionControllers
+namespace GoSentinel.Tests.Bots.Controllers.Action
 {
     public class AddPokemonFilterActionController
     {
-        private readonly Bots.Controllers.AddPokemonFilterActionController _controller;
+        private readonly GoSentinel.Bots.Controllers.BotAction.AddPokemonFilterActionController _controller;
 
         public AddPokemonFilterActionController()
         {
-            _controller = new Bots.Controllers.AddPokemonFilterActionController(new LogPokemonFilterActionService());
+            _controller = new GoSentinel.Bots.Controllers.BotAction.AddPokemonFilterActionController(new LogPokemonFilterActionService());
         }
 
         [Fact]
@@ -24,13 +24,13 @@ namespace GoSentinel.Tests.ActionControllers
         [Fact]
         public void Handle_WithWrongTypeAction_ShouldThrowArgumentException()
         {
-            Assert.Throws<ArgumentException>(() => _controller.Handle(new NearestPokemonAction()));
+            Assert.Throws<ArgumentException>(() => _controller.Handle(new NearestPokemonBotAction()));
         }
 
         [Fact]
         public void Handle_WhenCalled_ShouldReturnAddPokemonFilterActionResponseType()
         {
-            var response = _controller.Handle(new AddPokemonFilterAction()
+            var response = _controller.Handle(new AddPokemonFilterBotAction()
             {
                 Message = new Message()
                 {
@@ -47,7 +47,7 @@ namespace GoSentinel.Tests.ActionControllers
         [Fact]
         public void ActionResponse_WhenReturned_ShouldContainAction()
         {
-            var action = new AddPokemonFilterAction()
+            var action = new AddPokemonFilterBotAction()
             {
                 Stat = PokemonStat.Iv,
                 ValueMin = 99,
@@ -63,7 +63,7 @@ namespace GoSentinel.Tests.ActionControllers
             };
             var response = _controller.Handle(action) as AddPokemonFilterActionResponse;
 
-            Assert.Equal(action, response.Action);
+            Assert.Equal(action, response.BotAction);
         }
     }
 }

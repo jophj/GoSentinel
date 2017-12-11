@@ -1,6 +1,6 @@
 ﻿namespace GoSentinel.Data
 {
-    public class AddPokemonFilterAction : Action
+    public class AddPokemonFilterBotAction : BotAction
     {
         public override string Name => AddPokemonFilter;
         public string PokemonName { get; set; }
@@ -9,8 +9,8 @@
         public int? ValueMax { get; set; }
     }
 
-    public class AddPokemonFilterActionResponse : IActionResponse<AddPokemonFilterAction>
+    public class AddPokemonFilterActionResponse : IActionResponse<AddPokemonFilterBotAction>
     {
-        public AddPokemonFilterAction Action { get; set; }
+        public AddPokemonFilterBotAction BotAction { get; set; }
     }
 }

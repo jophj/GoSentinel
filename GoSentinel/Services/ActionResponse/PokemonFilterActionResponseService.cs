@@ -7,8 +7,8 @@ namespace GoSentinel.Services.ActionResponse
         public string Handle(IActionResponse actionResponse)
         {
             // WUT THIS SHIT
-            AddPokemonFilterAction action = ((AddPokemonFilterActionResponse)actionResponse).Action; // TODO
-            return $"{action.GetType().Name} - {action.Message.From.Username} - {action.PokemonName} - {action.Stat} - {action.ValueMin } - {action.ValueMax}";
+            AddPokemonFilterBotAction botAction = ((AddPokemonFilterActionResponse)actionResponse).BotAction; // TODO
+            return $"{botAction.GetType().Name} - {botAction.Message.From.Username} - {botAction.PokemonName} - {botAction.Stat} - {botAction.ValueMin } - {botAction.ValueMax}";
         }
     }
 }

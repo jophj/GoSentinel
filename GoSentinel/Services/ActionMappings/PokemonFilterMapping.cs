@@ -6,9 +6,9 @@ using GoSentinel.Data;
 
 namespace GoSentinel.Services.ActionMappings
 {
-    public class PokemonFilterMapping : IAiResponseMapper<AddPokemonFilterAction>
+    public class PokemonFilterMapping : IAiResponseMapper<AddPokemonFilterBotAction>
     {
-        public AddPokemonFilterAction Map(AIResponse r)
+        public AddPokemonFilterBotAction Map(AIResponse r)
         {
             {
                 int? v1;
@@ -42,7 +42,7 @@ namespace GoSentinel.Services.ActionMappings
                     stat = PokemonStat.Iv;
                 }
 
-                var action = new AddPokemonFilterAction()
+                var action = new AddPokemonFilterBotAction()
                 {
                     PokemonName = r.Result.Parameters["Pokemon"].ToString(),
                     Stat = stat,
