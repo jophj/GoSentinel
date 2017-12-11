@@ -6,7 +6,7 @@ using Moq;
 using Telegram.Bot.Types;
 using Xunit;
 
-namespace GoSentinel.Tests.Bots.Controllers.ActionResponseControllers
+namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
 {
     public class AddPokemonFilterActionResponseControllerTests
     {

@@ -4,7 +4,7 @@ using GoSentinel.Services.Actions;
 using Telegram.Bot.Types;
 using Xunit;
 
-namespace GoSentinel.Tests.Bots.Controllers.Action
+namespace GoSentinel.Tests.Bots.Controllers.BotAction
 {
     public class AddPokemonFilterActionController
     {
