@@ -24,13 +24,13 @@ namespace GoSentinel.Tests.Bots.Controllers.BotAction
         [Fact]
         public void Handle_WithWrongTypeAction_ShouldThrowArgumentException()
         {
-            Assert.Throws<ArgumentException>(() => _controller.Handle(new NearestPokemonBotAction()));
+            Assert.Throws<ArgumentException>(() => _controller.Handle(new NearestPokemonAction()));
         }
 
         [Fact]
         public void Handle_WhenCalled_ShouldReturnAddPokemonFilterActionResponseType()
         {
-            var response = _controller.Handle(new AddPokemonFilterBotAction()
+            var response = _controller.Handle(new AddPokemonFilterAction()
             {
                 Message = new Message()
                 {
@@ -47,7 +47,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotAction
         [Fact]
         public void ActionResponse_WhenReturned_ShouldContainAction()
         {
-            var action = new AddPokemonFilterBotAction()
+            var action = new AddPokemonFilterAction()
             {
                 Stat = PokemonStat.Iv,
                 ValueMin = 99,
@@ -63,7 +63,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotAction
             };
             var response = _controller.Handle(action) as AddPokemonFilterActionResponse;
 
-            Assert.Equal(action, response.BotAction);
+            Assert.Equal(action, response.Action);
         }
     }
 }

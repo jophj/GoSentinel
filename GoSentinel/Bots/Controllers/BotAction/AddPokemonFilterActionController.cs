@@ -4,7 +4,7 @@ using GoSentinel.Services.Actions;
 
 namespace GoSentinel.Bots.Controllers.BotAction
 {
-    public class AddPokemonFilterActionController : IActionController<AddPokemonFilterBotAction>
+    public class AddPokemonFilterActionController : IActionController<AddPokemonFilterAction>
     {
         private readonly IPokemonFilterActionService _pokemonFilterActionService;
 
@@ -20,7 +20,7 @@ namespace GoSentinel.Bots.Controllers.BotAction
                 throw new ArgumentNullException();
             }
 
-            if (!(baseAction is AddPokemonFilterBotAction action))
+            if (!(baseAction is AddPokemonFilterAction action))
             {
                 throw new ArgumentException();
             }

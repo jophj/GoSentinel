@@ -36,8 +36,8 @@ namespace GoSentinel
             services.AddSingleton(Configuration.GetSection("BotConfiguration").GetSection("Telegram").Get<TelegramBotConfiguration>());
             services.AddSingleton<IBotService, BotService>();
 
-            services.AddSingleton<IActionController<AddPokemonFilterBotAction>, AddPokemonFilterActionController>();
-            services.AddSingleton<IActionController<NearestPokemonBotAction>, NearestPokemonActionController>();
+            services.AddSingleton<IActionController<AddPokemonFilterAction>, AddPokemonFilterActionController>();
+            services.AddSingleton<IActionController<NearestPokemonAction>, NearestPokemonActionController>();
 
             services.AddSingleton<IActionResponseController<AddPokemonFilterActionResponse>, AddPokemonFilterActionResponseController>();
             services.AddSingleton<IActionResponseController<NearestPokemonActionResponse>, NearestPokemonActionResponseController>();

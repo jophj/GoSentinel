@@ -66,7 +66,7 @@ namespace GoSentinel.Tests.Services.Messages
         {
             return new AddPokemonFilterActionResponse()
             {
-                BotAction = new AddPokemonFilterBotAction()
+                Action = new AddPokemonFilterAction()
                 {
                     PokemonName = "Dratini",
                     Stat = stat,

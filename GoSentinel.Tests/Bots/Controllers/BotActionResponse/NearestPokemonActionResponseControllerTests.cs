@@ -9,25 +9,25 @@ using Xunit;
 
 namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
 {
-    public class AddPokemonFilterActionResponseControllerTests
+    public class NearestPokemonActionResponseControllerTests
     {
-        private readonly AddPokemonFilterActionResponseController _controller;
-        private readonly AddPokemonFilterMessageService _messageService;
+        private readonly NearestPokemonActionResponseController _controller;
+        private readonly NearestPokemonMessageService _messageService;
 
-        public AddPokemonFilterActionResponseControllerTests()
+        public NearestPokemonActionResponseControllerTests()
         {
-            _messageService = new AddPokemonFilterMessageService();
-            _controller = new AddPokemonFilterActionResponseController(_messageService);
+            _messageService = new NearestPokemonMessageService();
+            _controller = new NearestPokemonActionResponseController(_messageService);
         }
 
         [Fact]
         public void Handle_WithWrongTypeActionResponseArgument_ShouldThrowArgumentException()
         {
-            var actionResponse = new NearestPokemonActionResponse();
+            var actionResponse = new AddPokemonFilterActionResponse();
 
             void Handle() => _controller.Handle(null, actionResponse);
 
-            Assert.Throws<ArgumentException>((Action) Handle);
+            Assert.Throws<ArgumentException>((Action)Handle);
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
 
             _controller.Handle(botMock.Object, actionResponse);
 
-            botMock.Verify(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()), Times.Once);
+            botMock.Verify(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()));
         }
 
         [Fact]
@@ -55,18 +55,15 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
             botMock.Verify(b => b.SendTextMessageAsync(
                 It.Is<long>(i => i == actionResponse.Action.Message.Chat.Id),
                 It.Is<string>(e => e == msg)
-                ), Times.Once);
+            ), Times.Once);
         }
 
-        private AddPokemonFilterActionResponse MakeActionResponse()
+        private NearestPokemonActionResponse MakeActionResponse()
         {
-            return new AddPokemonFilterActionResponse()
+            return new NearestPokemonActionResponse()
             {
-                Action = new AddPokemonFilterAction()
+                Action = new NearestPokemonAction()
                 {
-                    Stat = PokemonStat.Iv,
-                    ValueMin = 98,
-                    ValueMax = 100,
                     PokemonName = "Dratini",
                     Message = new Message()
                     {
@@ -80,4 +77,3 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
         }
     }
 }
-
