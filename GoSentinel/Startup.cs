@@ -10,7 +10,6 @@ using GoSentinel.Services;
 using GoSentinel.Data;
 using GoSentinel.Services.Actions;
 using GoSentinel.Services.ActionMappings;
-using GoSentinel.Services.ActionResponse;
 
 namespace GoSentinel
 {
@@ -41,7 +40,6 @@ namespace GoSentinel
             services.AddSingleton<IActionResponseController<AddPokemonFilterActionResponse>, AddPokemonFilterActionResponseController>();
             services.AddSingleton<IActionResponseController<NearestPokemonActionResponse>, NearestPokemonActionResponseController>();
 
-            services.AddSingleton<PokemonFilterActionResponseService, PokemonFilterActionResponseService>();
             services.AddSingleton<IPokemonFilterActionService, LogPokemonFilterActionService>();
 
             services.AddSingleton<IBotMessageController, BotMessageController>();
