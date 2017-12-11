@@ -2,6 +2,7 @@
 using GoSentinel.Bots;
 using GoSentinel.Bots.Controllers.BotActionResponse;
 using GoSentinel.Data;
+using GoSentinel.Services.Messages;
 using Moq;
 using Telegram.Bot.Types;
 using Xunit;
@@ -11,10 +12,12 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
     public class AddPokemonFilterActionResponseControllerTests
     {
         private readonly AddPokemonFilterActionResponseController _controller;
+        private readonly AddPokemonFilterMessageService _messageService;
 
         public AddPokemonFilterActionResponseControllerTests()
         {
-            _controller = new AddPokemonFilterActionResponseController();
+            _messageService = new AddPokemonFilterMessageService();
+            _controller = new AddPokemonFilterActionResponseController(_messageService);
         }
 
         [Fact]
@@ -24,7 +27,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
 
             void Handle() => _controller.Handle(null, actionResponse);
 
-            Assert.Throws<ArgumentException>((System.Action) Handle);
+            Assert.Throws<ArgumentException>((Action) Handle);
         }
 
         [Fact]
@@ -34,13 +37,14 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
             var botMock = new Mock<IBot>();
 
             botMock.Setup(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()));
+            var msg = _messageService.Generate(actionResponse);
 
             _controller.Handle(botMock.Object, actionResponse);
 
-            botMock.Verify(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()), Times.Once);
+            botMock.Verify(b => b.SendTextMessageAsync(It.IsAny<long>(), It.Is<string>(e => e == msg)), Times.Once);
         }
 
-        private IActionResponse MakeActionResponse()
+        private AddPokemonFilterActionResponse MakeActionResponse()
         {
             return new AddPokemonFilterActionResponse()
             {
@@ -62,3 +66,4 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
         }
     }
 }
+

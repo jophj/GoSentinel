@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GoSentinel.Data;
+﻿using GoSentinel.Data;
 using GoSentinel.Services.Messages;
 using Xunit;
 
