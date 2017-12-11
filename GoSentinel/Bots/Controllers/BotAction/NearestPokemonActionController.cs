@@ -1,9 +1,9 @@
 ﻿using System;
 using GoSentinel.Data;
 
-namespace GoSentinel.Bots.Controllers
+namespace GoSentinel.Bots.Controllers.BotAction
 {
-    public class NearestPokemonActionController : IActionController<NearestPokemonAction>
+    public class NearestPokemonActionController : IActionController<NearestPokemonBotAction>
     {
         public IActionResponse Handle(IAction baseAction)
         {
@@ -12,7 +12,7 @@ namespace GoSentinel.Bots.Controllers
                 throw new ArgumentNullException();
             }
 
-            if (!(baseAction is NearestPokemonAction action))
+            if (!(baseAction is NearestPokemonBotAction action))
             {
                 throw new ArgumentException();
             }
@@ -20,7 +20,7 @@ namespace GoSentinel.Bots.Controllers
             Console.WriteLine($"{action.GetType().Name} - {action.Message.From.Username} - {action.PokemonName}");
             return new NearestPokemonActionResponse()
             {
-                Action = action
+                BotAction = action
             };
         }
     }

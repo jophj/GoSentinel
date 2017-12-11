@@ -4,11 +4,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using GoSentinel.Bots.Controllers;
+using GoSentinel.Bots.Controllers.BotAction;
+using GoSentinel.Bots.Controllers.BotActionResponse;
 using GoSentinel.Services;
 using GoSentinel.Data;
 using GoSentinel.Services.Actions;
 using GoSentinel.Services.ActionMappings;
-using GoSentinel.Services.ActionResponse;
+using GoSentinel.Services.Messages;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace GoSentinel
 {
@@ -33,14 +36,15 @@ namespace GoSentinel
             services.AddSingleton(Configuration.GetSection("BotConfiguration").GetSection("Telegram").Get<TelegramBotConfiguration>());
             services.AddSingleton<IBotService, BotService>();
 
-            services.AddSingleton<IActionController<AddPokemonFilterAction>, AddPokemonFilterActionController>();
-            services.AddSingleton<IActionController<NearestPokemonAction>, NearestPokemonActionController>();
+            services.AddSingleton<IActionController<AddPokemonFilterBotAction>, AddPokemonFilterActionController>();
+            services.AddSingleton<IActionController<NearestPokemonBotAction>, NearestPokemonActionController>();
 
-            services.AddSingleton<IActionResponseController<AddPokemonFilterActionResponse>, PokemonFilterActionResponseController>();
+            services.AddSingleton<IActionResponseController<AddPokemonFilterActionResponse>, AddPokemonFilterActionResponseController>();
             services.AddSingleton<IActionResponseController<NearestPokemonActionResponse>, NearestPokemonActionResponseController>();
 
-            services.AddSingleton<PokemonFilterActionResponseService, PokemonFilterActionResponseService>();
             services.AddSingleton<IPokemonFilterActionService, LogPokemonFilterActionService>();
+
+            services.AddSingleton<IMessageService<AddPokemonFilterActionResponse>, AddPokemonFilterMessageService>();
 
             services.AddSingleton<IBotMessageController, BotMessageController>();
             services.AddSingleton<AiResponseToActionService, AiResponseToActionService>();

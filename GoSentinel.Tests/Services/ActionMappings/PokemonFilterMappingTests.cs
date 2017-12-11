@@ -3,9 +3,8 @@ using ApiAiSDK.Model;
 using GoSentinel.Data;
 using GoSentinel.Services.ActionMappings;
 using Xunit;
-using Action = GoSentinel.Data.Action;
 
-namespace GoSentinel.Tests
+namespace GoSentinel.Tests.Services.ActionMappings
 {
     public class PokemonFilterMappingTests
     {
@@ -19,11 +18,11 @@ namespace GoSentinel.Tests
         [Fact]
         public void Should_Map_AddPokemonFilterAction()
         {
-            var action = (AddPokemonFilterAction)_pokemonFilterMapping.Map(new AIResponse()
+            var action = _pokemonFilterMapping.Map(new AIResponse()
             {
                 Result = new Result()
                 {
-                    Action = Action.AddPokemonFilter,
+                    Action = BotAction.AddPokemonFilter,
                     Parameters = new Dictionary<string, object>()
                     {
                         { "Pokemon", "Rattata" },
@@ -47,7 +46,7 @@ namespace GoSentinel.Tests
             {
                 Result = new Result()
                 {
-                    Action = Action.AddPokemonFilter,
+                    Action = BotAction.AddPokemonFilter,
                     Parameters = new Dictionary<string, object>()
                     {
                         { "Pokemon", "Rattata" },
@@ -70,7 +69,7 @@ namespace GoSentinel.Tests
             {
                 Result = new Result()
                 {
-                    Action = Action.AddPokemonFilter,
+                    Action = BotAction.AddPokemonFilter,
                     Parameters = new Dictionary<string, object>()
                     {
                         { "Pokemon", "Rattata" },
@@ -90,7 +89,7 @@ namespace GoSentinel.Tests
             {
                 Result = new Result()
                 {
-                    Action = Action.AddPokemonFilter,
+                    Action = BotAction.AddPokemonFilter,
                     Parameters = new Dictionary<string, object>()
                     {
                         { "Pokemon", "Rattata" },

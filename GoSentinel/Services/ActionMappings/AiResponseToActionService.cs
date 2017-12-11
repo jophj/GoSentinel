@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using ApiAiSDK.Model;
 using GoSentinel.Data;
-using Action = GoSentinel.Data.Action;
 
 namespace GoSentinel.Services.ActionMappings
 {
@@ -15,8 +14,8 @@ namespace GoSentinel.Services.ActionMappings
         {
             _actionMap = new Dictionary<string, Func<AIResponse, IAction>>()
             {
-                { Action.AddPokemonFilter, pokemonFilterMapping.Map },
-                { Action.NearestPokemon, nearestPokemonMapping.Map }
+                { BotAction.AddPokemonFilter, pokemonFilterMapping.Map },
+                { BotAction.NearestPokemon, nearestPokemonMapping.Map }
             };
         }
 

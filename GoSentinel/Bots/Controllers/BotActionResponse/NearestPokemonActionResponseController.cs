@@ -1,7 +1,7 @@
 ﻿using System;
 using GoSentinel.Data;
 
-namespace GoSentinel.Bots.Controllers
+namespace GoSentinel.Bots.Controllers.BotActionResponse
 {
     public class NearestPokemonActionResponseController : IActionResponseController<NearestPokemonActionResponse>
     {
@@ -17,7 +17,7 @@ namespace GoSentinel.Bots.Controllers
                 throw new ArgumentException();
             }
 
-            bot.SendTextMessageAsync(actionResponse.Action.Message.Chat.Id, $"{actionResponse.Action.GetType().Name} - {actionResponse.Action.Message.From.Username} - {actionResponse.Action.PokemonName}");
+            bot.SendTextMessageAsync(actionResponse.BotAction.Message.Chat.Id, $"{actionResponse.BotAction.GetType().Name} - {actionResponse.BotAction.Message.From.Username} - {actionResponse.BotAction.PokemonName}");
         }
     }
 }

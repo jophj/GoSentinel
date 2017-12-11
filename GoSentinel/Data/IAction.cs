@@ -8,7 +8,6 @@ namespace GoSentinel.Data
     public interface IAction
     {
         string Name { get; }
-        string UserId { get; set; }
         Message Message { get; set; }
     }
 }
