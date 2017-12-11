@@ -6,7 +6,7 @@ namespace GoSentinel.Services.Messages
     {
         public string Generate(NearestPokemonActionResponse actionResponse)
         {
-            return "";
+            return "I can't send a location yet";
         }
     }
 }

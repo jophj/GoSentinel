@@ -62,7 +62,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
         {
             return new AddPokemonFilterActionResponse()
             {
-                Action = new AddPokemonFilterBotAction()
+                Action = new AddPokemonFilterAction()
                 {
                     Stat = PokemonStat.Iv,
                     ValueMin = 98,

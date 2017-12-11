@@ -62,7 +62,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
         {
             return new NearestPokemonActionResponse()
             {
-                Action = new NearestPokemonBotAction()
+                Action = new NearestPokemonAction()
                 {
                     PokemonName = "Dratini",
                     Message = new Message()

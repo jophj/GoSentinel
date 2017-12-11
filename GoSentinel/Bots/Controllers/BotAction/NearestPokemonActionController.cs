@@ -3,7 +3,7 @@ using GoSentinel.Data;
 
 namespace GoSentinel.Bots.Controllers.BotAction
 {
-    public class NearestPokemonActionController : IActionController<NearestPokemonBotAction>
+    public class NearestPokemonActionController : IActionController<NearestPokemonAction>
     {
         public IActionResponse Handle(IAction baseAction)
         {
@@ -12,7 +12,7 @@ namespace GoSentinel.Bots.Controllers.BotAction
                 throw new ArgumentNullException();
             }
 
-            if (!(baseAction is NearestPokemonBotAction action))
+            if (!(baseAction is NearestPokemonAction action))
             {
                 throw new ArgumentException();
             }
