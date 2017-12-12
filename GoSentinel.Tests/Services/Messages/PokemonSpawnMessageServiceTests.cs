@@ -25,19 +25,26 @@ namespace GoSentinel.Tests.Services.Messages
         }
 
         [Theory]
-        [InlineData(147, "Dratini")]
-        [InlineData(32, "NidoranMale")]
-        [InlineData(359, "Absol")]
-        [InlineData(9999, "9999")]
-        public void Generate_WithPokemonSpawn_ShouldHaveFormattedFirstLine(int pokemonId, string pokemonName)
+        [InlineData(147, 10, "Dratini")]
+        [InlineData(32, 11, "NidoranMale")]
+        [InlineData(359, 14, "Absol")]
+        [InlineData(9999, 15, "9999")]
+        public void Generate_WithPokemonSpawn_ShouldHaveFormattedFirstLine(int pokemonId, int atk, string pokemonName)
         {
             var actionResponse = MakeActionResponse(MakePokemonSpawn());
             actionResponse.PokemonSpawn.PokemonId = pokemonId;
+            actionResponse.PokemonSpawn.Attack = atk;
 
             var message = _service.Generate(actionResponse);
+            var iv = ((
+                          actionResponse.PokemonSpawn.Attack +
+                          actionResponse.PokemonSpawn.Defense +
+                          actionResponse.PokemonSpawn.Stamina
+                      ) / 45).ToString("0.0");
+
             var lines = message.Split(Environment.NewLine);
 
-            Assert.Equal($"**{pokemonName} 100%**", lines[0]);
+            Assert.Equal($"**{pokemonName} {iv}%**", lines[0]);
         }
 
         [Theory]
@@ -74,6 +81,23 @@ namespace GoSentinel.Tests.Services.Messages
             Assert.Matches($".+\\({timeSpanFormatted}\\)", lines[1]);
         }
 
+        [Theory]
+        [InlineData(10, "CP: 10 (Level: 1)")]
+        [InlineData(60, "CP: 60 (Level: 6)")]
+        [InlineData(125, "CP: 125 (Level: 12)")]
+        [InlineData(3568, "CP: 3568 (Level: 356)")]
+        public void Generate_WithPokemonSpawn_ShouldHaveFormattedCpAndLevel(int cp, string lineFormatted)
+        {
+            var actionResponse = MakeActionResponse(MakePokemonSpawn());
+            actionResponse.PokemonSpawn.Cp = cp;
+            actionResponse.PokemonSpawn.Level = cp / 10;
+
+            var message = _service.Generate(actionResponse);
+            var lines = message.Split(Environment.NewLine);
+
+            Assert.Equal(lineFormatted, lines[2]);
+        }
+
         private PokemonSpawn MakePokemonSpawn()
         {
             return new PokemonSpawn()
@@ -87,6 +111,7 @@ namespace GoSentinel.Tests.Services.Messages
                 Defense = 15,
                 Stamina = 15,
                 Level = 30,
+                Cp = 3000,
                 From = 2
             };
         }
