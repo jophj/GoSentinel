@@ -1,4 +1,6 @@
-﻿namespace GoSentinel.Data
+﻿using GoSentinel.Models;
+
+namespace GoSentinel.Data
 {
     public class NearestPokemonAction : BotAction
     {
@@ -9,5 +11,6 @@
     public class NearestPokemonActionResponse : IActionResponse<NearestPokemonAction>
     {
         public NearestPokemonAction Action { get; set; }
+        public PokemonSpawn PokemonSpawn { get; set; }
     }
 }

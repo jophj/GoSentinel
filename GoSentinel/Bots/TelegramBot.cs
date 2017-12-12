@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Spatial;
 using System.Threading.Tasks;
 using GoSentinel.Data;
 using Telegram.Bot;
@@ -39,6 +40,11 @@ namespace GoSentinel.Bots
         public async Task<Message> SendTextMessageAsync(long chatId, string text)
         {
             return await _client.SendTextMessageAsync(chatId, text);
+        }
+
+        public async Task<Message> SendLocationAsync(long chatId, float latitude, float longitude)
+        {
+            return await _client.SendLocationAsync(chatId, latitude, longitude);
         }
     }
 }

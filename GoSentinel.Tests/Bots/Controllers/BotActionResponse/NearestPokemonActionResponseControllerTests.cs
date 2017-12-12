@@ -2,6 +2,7 @@
 using GoSentinel.Bots;
 using GoSentinel.Bots.Controllers.BotActionResponse;
 using GoSentinel.Data;
+using GoSentinel.Models;
 using GoSentinel.Services.Messages;
 using Moq;
 using Telegram.Bot.Types;
@@ -12,12 +13,12 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
     public class NearestPokemonActionResponseControllerTests
     {
         private readonly NearestPokemonActionResponseController _controller;
-        private readonly NearestPokemonMessageService _messageService;
+        private readonly PokemonSpawnMessageService _spawnMessageService;
 
         public NearestPokemonActionResponseControllerTests()
         {
-            _messageService = new NearestPokemonMessageService();
-            _controller = new NearestPokemonActionResponseController(_messageService);
+            _spawnMessageService = new PokemonSpawnMessageService();
+            _controller = new NearestPokemonActionResponseController(_spawnMessageService);
         }
 
         [Fact]
@@ -48,7 +49,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
             var actionResponse = MakeActionResponse();
             var botMock = new Mock<IBot>();
             botMock.Setup(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()));
-            var msg = _messageService.Generate(actionResponse);
+            var msg = _spawnMessageService.Generate(actionResponse);
 
             _controller.Handle(botMock.Object, actionResponse);
 
@@ -62,6 +63,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
         {
             return new NearestPokemonActionResponse()
             {
+                PokemonSpawn = new PokemonSpawn(),
                 Action = new NearestPokemonAction()
                 {
                     PokemonName = "Dratini",
