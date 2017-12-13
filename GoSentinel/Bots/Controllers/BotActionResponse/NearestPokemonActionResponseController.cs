@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using GoSentinel.Data;
 using GoSentinel.Services.Messages;
 
@@ -25,8 +26,25 @@ namespace GoSentinel.Bots.Controllers.BotActionResponse
                 throw new ArgumentException();
             }
 
+            if (actionResponse.PokemonSpawn == null)
+            {
+                throw new ArgumentException("PokemonSpawn cannot be null");
+            }
+
             var msg = _messageService.Generate(actionResponse);
-            bot.SendTextMessageAsync(actionResponse.Action.Message.Chat.Id, msg);
+            try
+            {
+                var message = bot.SendTextMessageAsync(actionResponse.Action.Message.Chat.Id, msg).Result;
+                bot.SendLocationAsync(
+                    actionResponse.Action.Message.Chat.Id,
+                    actionResponse.PokemonSpawn.Latitude,
+                    actionResponse.PokemonSpawn.Longitude
+                );
+            }
+            catch(Exception e)
+            {
+                Console.Error.WriteLine(e.Message);
+            }
         }
     }
 }

@@ -104,8 +104,8 @@ namespace GoSentinel.Tests.Services.Messages
             {
                 SpawnpointId = "",
                 PokemonId = 134,
-                Latitude = 43.123,
-                Longitude = 11.123,
+                Latitude = 43.123f,
+                Longitude = 11.123f,
                 DisappearTime = DateTime.Now,
                 Attack = 15,
                 Defense = 15,

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using GoSentinel.Bots;
 using GoSentinel.Bots.Controllers.BotActionResponse;
 using GoSentinel.Data;
@@ -32,6 +33,17 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
         }
 
         [Fact]
+        public void Handle_WithNoPokemonSpawn_ShouldThrowArgumentException()
+        {
+            var actionResponse = MakeActionResponse();
+            actionResponse.PokemonSpawn = null;
+
+            void Handle() => _controller.Handle(null, actionResponse);
+
+            Assert.Throws<ArgumentException>((Action)Handle);
+        }
+
+        [Fact]
         public void Handle_WithCorrectActionResponse_ShouldCallSendTextMessageAsync()
         {
             var actionResponse = MakeActionResponse();
@@ -40,7 +52,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
 
             _controller.Handle(botMock.Object, actionResponse);
 
-            botMock.Verify(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()));
+            botMock.Verify(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
@@ -54,9 +66,51 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
             _controller.Handle(botMock.Object, actionResponse);
 
             botMock.Verify(b => b.SendTextMessageAsync(
-                It.Is<long>(i => i == actionResponse.Action.Message.Chat.Id),
-                It.Is<string>(e => e == msg)
+                actionResponse.Action.Message.Chat.Id,
+                msg
             ), Times.Once);
+        }
+
+        [Fact]
+        public void Handle_WithCorrectActionResponse_ShouldCallSendLocationAsyncWithCorrectParameters()
+        {
+            var actionResponse = MakeActionResponse();
+            var botMock = new Mock<IBot>();
+            botMock.Setup(b => b.SendLocationAsync(It.IsAny<long>(), It.IsAny<float>(), It.IsAny<float>()));
+
+            _controller.Handle(botMock.Object, actionResponse);
+
+            botMock.Verify(b => b.SendLocationAsync(
+                actionResponse.Action.Message.Chat.Id,
+                actionResponse.PokemonSpawn.Latitude,
+                actionResponse.PokemonSpawn.Longitude
+            ), Times.Once);
+        }
+
+        [Fact]
+        public void Handle_WhenCalled_ShouldCallSendTextMessageAsyncBeforeSendLocationAsync()
+        {
+            var actionResponse = MakeActionResponse();
+            var botMock = new Mock<IBot>(MockBehavior.Strict);
+            var sequence = new MockSequence();
+            botMock
+                .InSequence(sequence)
+                .Setup(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()))
+                .ReturnsAsync(new Message());
+            botMock
+                .InSequence(sequence)
+                .Setup(b => b.SendLocationAsync(It.IsAny<long>(), It.IsAny<float>(), It.IsAny<float>()))
+                .ReturnsAsync(new Message());
+
+            _controller.Handle(botMock.Object, actionResponse);
+
+            botMock.Verify(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()), Times.Once);
+            botMock.Verify(b => b.SendLocationAsync(
+                It.IsAny<long>(),
+                It.IsAny<float>(),
+                It.IsAny<float>()
+            ), Times.Once);
+
         }
 
         private NearestPokemonActionResponse MakeActionResponse()
