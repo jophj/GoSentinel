@@ -1,5 +1,12 @@
-﻿namespace GoSentinel.Data
+﻿using POGOProtos.Data.Gym;
+
+namespace GoSentinel.Data
 {
+    public class GymStateAction : BotAction
+    {
+        public override string Name => GymStateRequest;
+    }
+
     public class AddPokemonFilterAction : BotAction
     {
         public override string Name => AddPokemonFilter;
