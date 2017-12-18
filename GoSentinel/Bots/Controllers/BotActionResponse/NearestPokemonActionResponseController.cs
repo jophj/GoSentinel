@@ -14,7 +14,7 @@ namespace GoSentinel.Bots.Controllers.BotActionResponse
             _messageService = messageService;
         }
 
-        public void Handle(IBot bot, IActionResponse actionResponseBase)
+        public async Task HandleAsync(IBot bot, IActionResponse actionResponseBase)
         {
             if (actionResponseBase == null)
             {
@@ -34,8 +34,8 @@ namespace GoSentinel.Bots.Controllers.BotActionResponse
             var msg = _messageService.Generate(actionResponse);
             try
             {
-                var message = bot.SendTextMessageAsync(actionResponse.Action.Message.Chat.Id, msg).Result;
-                bot.SendLocationAsync(
+                await bot.SendTextMessageAsync(actionResponse.Action.Message.Chat.Id, msg);
+                await bot.SendLocationAsync(
                     actionResponse.Action.Message.Chat.Id,
                     actionResponse.PokemonSpawn.Latitude,
                     actionResponse.PokemonSpawn.Longitude

@@ -42,9 +42,11 @@ namespace GoSentinel
             services.AddSingleton<IActionResponseController<AddPokemonFilterActionResponse>, AddPokemonFilterActionResponseController>();
             services.AddSingleton<IActionResponseController<NearestPokemonActionResponse>, NearestPokemonActionResponseController>();
 
-            services.AddSingleton<IPokemonFilterActionService, LogPokemonFilterActionService>();
+            services.AddSingleton<IPokemonFilterService, LogPokemonFilterService>();
+            services.AddSingleton<INearestPokemonService, FakeNearestPokemonService>();
 
             services.AddSingleton<IMessageService<AddPokemonFilterActionResponse>, AddPokemonFilterMessageService>();
+            services.AddSingleton<IMessageService<NearestPokemonActionResponse>, PokemonSpawnMessageService>();
 
             services.AddSingleton<IBotMessageController, BotMessageController>();
             services.AddSingleton<AiResponseToActionService, AiResponseToActionService>();

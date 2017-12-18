@@ -23,47 +23,47 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
         }
 
         [Fact]
-        public void Handle_WithWrongTypeActionResponseArgument_ShouldThrowArgumentException()
+        public async Task Handle_WithWrongTypeActionResponseArgument_ShouldThrowArgumentException()
         {
             var actionResponse = new AddPokemonFilterActionResponse();
 
-            void Handle() => _controller.Handle(null, actionResponse);
+            Task Handle() => _controller.HandleAsync(null, actionResponse);
 
-            Assert.Throws<ArgumentException>((Action)Handle);
+            await Assert.ThrowsAsync<ArgumentException>(Handle);
         }
 
         [Fact]
-        public void Handle_WithNoPokemonSpawn_ShouldThrowArgumentException()
+        public async Task Handle_WithNoPokemonSpawn_ShouldThrowArgumentException()
         {
             var actionResponse = MakeActionResponse();
             actionResponse.PokemonSpawn = null;
 
-            void Handle() => _controller.Handle(null, actionResponse);
+            Task Handle() => _controller.HandleAsync(null, actionResponse);
 
-            Assert.Throws<ArgumentException>((Action)Handle);
+            await Assert.ThrowsAsync<ArgumentException>(Handle);
         }
 
         [Fact]
-        public void Handle_WithCorrectActionResponse_ShouldCallSendTextMessageAsync()
+        public async Task Handle_WithCorrectActionResponse_ShouldCallSendTextMessageAsync()
         {
             var actionResponse = MakeActionResponse();
             var botMock = new Mock<IBot>();
             botMock.Setup(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()));
 
-            _controller.Handle(botMock.Object, actionResponse);
+            await _controller.HandleAsync(botMock.Object, actionResponse);
 
             botMock.Verify(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
-        public void Handle_WithCorrectActionResponse_ShouldCallSendTextMessageAsyncWithCorrectParameters()
+        public async Task Handle_WithCorrectActionResponse_ShouldCallSendTextMessageAsyncWithCorrectParameters()
         {
             var actionResponse = MakeActionResponse();
             var botMock = new Mock<IBot>();
             botMock.Setup(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()));
             var msg = _spawnMessageService.Generate(actionResponse);
 
-            _controller.Handle(botMock.Object, actionResponse);
+            await _controller.HandleAsync(botMock.Object, actionResponse);
 
             botMock.Verify(b => b.SendTextMessageAsync(
                 actionResponse.Action.Message.Chat.Id,
@@ -72,13 +72,13 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
         }
 
         [Fact]
-        public void Handle_WithCorrectActionResponse_ShouldCallSendLocationAsyncWithCorrectParameters()
+        public async Task Handle_WithCorrectActionResponse_ShouldCallSendLocationAsyncWithCorrectParameters()
         {
             var actionResponse = MakeActionResponse();
             var botMock = new Mock<IBot>();
             botMock.Setup(b => b.SendLocationAsync(It.IsAny<long>(), It.IsAny<float>(), It.IsAny<float>()));
 
-            _controller.Handle(botMock.Object, actionResponse);
+            await _controller.HandleAsync(botMock.Object, actionResponse);
 
             botMock.Verify(b => b.SendLocationAsync(
                 actionResponse.Action.Message.Chat.Id,
@@ -88,7 +88,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
         }
 
         [Fact]
-        public void Handle_WhenCalled_ShouldCallSendTextMessageAsyncBeforeSendLocationAsync()
+        public async Task Handle_WhenCalled_ShouldCallSendTextMessageAsyncBeforeSendLocationAsync()
         {
             var actionResponse = MakeActionResponse();
             var botMock = new Mock<IBot>(MockBehavior.Strict);
@@ -102,7 +102,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
                 .Setup(b => b.SendLocationAsync(It.IsAny<long>(), It.IsAny<float>(), It.IsAny<float>()))
                 .ReturnsAsync(new Message());
 
-            _controller.Handle(botMock.Object, actionResponse);
+            await _controller.HandleAsync(botMock.Object, actionResponse);
 
             botMock.Verify(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()), Times.Once);
             botMock.Verify(b => b.SendLocationAsync(

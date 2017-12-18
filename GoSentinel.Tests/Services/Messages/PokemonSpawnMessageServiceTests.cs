@@ -2,6 +2,7 @@
 using GoSentinel.Data;
 using GoSentinel.Models;
 using GoSentinel.Services.Messages;
+using POGOProtos.Enums;
 using Telegram.Bot.Types;
 using Xunit;
 
@@ -25,11 +26,11 @@ namespace GoSentinel.Tests.Services.Messages
         }
 
         [Theory]
-        [InlineData(147, 10, "Dratini")]
-        [InlineData(32, 11, "NidoranMale")]
-        [InlineData(359, 14, "Absol")]
-        [InlineData(9999, 15, "9999")]
-        public void Generate_WithPokemonSpawn_ShouldHaveFormattedFirstLine(int pokemonId, int atk, string pokemonName)
+        [InlineData(PokemonId.Dratini, 10, "Dratini")]
+        [InlineData(PokemonId.NidoranMale, 11, "NidoranMale")]
+        [InlineData(PokemonId.Absol, 14, "Absol")]
+        [InlineData(PokemonId.Missingno, 0, "Missingno")]
+        public void Generate_WithPokemonSpawn_ShouldHaveFormattedFirstLine(PokemonId pokemonId, int atk, string pokemonName)
         {
             var actionResponse = MakeActionResponse(MakePokemonSpawn());
             actionResponse.PokemonSpawn.PokemonId = pokemonId;
@@ -37,10 +38,10 @@ namespace GoSentinel.Tests.Services.Messages
 
             var message = _service.Generate(actionResponse);
             var iv = ((
-                          actionResponse.PokemonSpawn.Attack +
-                          actionResponse.PokemonSpawn.Defense +
-                          actionResponse.PokemonSpawn.Stamina
-                      ) / 45).ToString("0.0");
+                          actionResponse.PokemonSpawn.Attack.Value +
+                          actionResponse.PokemonSpawn.Defense.Value +
+                          actionResponse.PokemonSpawn.Stamina.Value
+                      ) * 100 / 45f).ToString("0.0");
 
             var lines = message.Split(Environment.NewLine);
 
@@ -103,7 +104,7 @@ namespace GoSentinel.Tests.Services.Messages
             return new PokemonSpawn()
             {
                 SpawnpointId = "",
-                PokemonId = 134,
+                PokemonId = 0,
                 Latitude = 43.123f,
                 Longitude = 11.123f,
                 DisappearTime = DateTime.Now,
@@ -111,8 +112,7 @@ namespace GoSentinel.Tests.Services.Messages
                 Defense = 15,
                 Stamina = 15,
                 Level = 30,
-                Cp = 3000,
-                From = 2
+                Cp = 3000
             };
         }
 

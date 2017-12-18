@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using GoSentinel.Data;
 using GoSentinel.Services.Messages;
 
@@ -13,7 +14,7 @@ namespace GoSentinel.Bots.Controllers.BotActionResponse
             _messageService = messageService;
         }
 
-        public void Handle(IBot bot, IActionResponse actionResponseBase)
+        public async Task HandleAsync(IBot bot, IActionResponse actionResponseBase)
         {
             if (!(actionResponseBase is AddPokemonFilterActionResponse actionResponse))
             {
@@ -21,7 +22,7 @@ namespace GoSentinel.Bots.Controllers.BotActionResponse
             }
 
             var msg = _messageService.Generate(actionResponse);
-            bot.SendTextMessageAsync(actionResponse.Action.Message.Chat.Id, msg);
+            await bot.SendTextMessageAsync(actionResponse.Action.Message.Chat.Id, msg);
         }
     }
 }

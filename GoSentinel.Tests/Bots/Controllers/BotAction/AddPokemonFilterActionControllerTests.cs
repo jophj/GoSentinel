@@ -1,4 +1,5 @@
 ﻿using System;
+using GoSentinel.Bots.Controllers.BotAction;
 using GoSentinel.Data;
 using GoSentinel.Services.Actions;
 using Telegram.Bot.Types;
@@ -6,13 +7,13 @@ using Xunit;
 
 namespace GoSentinel.Tests.Bots.Controllers.BotAction
 {
-    public class AddPokemonFilterActionController
+    public class AddPokemonFilterActionControllerTests
     {
-        private readonly GoSentinel.Bots.Controllers.BotAction.AddPokemonFilterActionController _controller;
+        private readonly AddPokemonFilterActionController _controller;
 
-        public AddPokemonFilterActionController()
+        public AddPokemonFilterActionControllerTests()
         {
-            _controller = new GoSentinel.Bots.Controllers.BotAction.AddPokemonFilterActionController(new LogPokemonFilterActionService());
+            _controller = new AddPokemonFilterActionController(new LogPokemonFilterService());
         }
 
         [Fact]
@@ -63,6 +64,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotAction
             };
             var response = _controller.Handle(action) as AddPokemonFilterActionResponse;
 
+            Assert.NotNull(response);
             Assert.Equal(action, response.Action);
         }
     }

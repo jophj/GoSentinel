@@ -6,11 +6,11 @@ namespace GoSentinel.Bots.Controllers.BotAction
 {
     public class AddPokemonFilterActionController : IActionController<AddPokemonFilterAction>
     {
-        private readonly IPokemonFilterActionService _pokemonFilterActionService;
+        private readonly IPokemonFilterService _pokemonFilterService;
 
-        public AddPokemonFilterActionController(IPokemonFilterActionService pokemonFilterActionService)
+        public AddPokemonFilterActionController(IPokemonFilterService pokemonFilterService)
         {
-            _pokemonFilterActionService = pokemonFilterActionService;
+            _pokemonFilterService = pokemonFilterService;
         }
 
         public IActionResponse Handle(IAction baseAction)
@@ -25,7 +25,7 @@ namespace GoSentinel.Bots.Controllers.BotAction
                 throw new ArgumentException();
             }
 
-            return _pokemonFilterActionService.Add(action).Result;
+            return _pokemonFilterService.Add(action).Result;
         }
     }
 }

@@ -43,7 +43,7 @@ namespace GoSentinel.Bots.Controllers
 
             Type actionResponseControllerGenericType = typeof(IActionResponseController<>).MakeGenericType(actionResponse.GetType());
             IActionResponseController actionResponseController = (IActionResponseController)_serviceProvider.GetService(actionResponseControllerGenericType);
-            actionResponseController?.Handle(bot, actionResponse);
+            actionResponseController?.HandleAsync(bot, actionResponse);
         }
     }
 }
