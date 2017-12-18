@@ -4,12 +4,12 @@ using GoSentinel.Data;
 
 namespace GoSentinel.Services.Actions
 {
-    public interface IPokemonFilterActionService
+    public interface IPokemonFilterService
     {
         Task<IActionResponse> Add(AddPokemonFilterAction action);
     }
 
-    public class LogPokemonFilterActionService : IPokemonFilterActionService
+    public class LogPokemonFilterService : IPokemonFilterService
     {
         public async Task<IActionResponse> Add(AddPokemonFilterAction action)
         {

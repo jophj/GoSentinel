@@ -17,7 +17,7 @@ namespace GoSentinel.Services.Messages
             StringBuilder builder = new StringBuilder();
 
             var pokemonName = GetPokemonName(actionResponse.PokemonSpawn.PokemonId);
-            builder.AppendLine($"**{pokemonName} {getIv(actionResponse.PokemonSpawn)}%**");
+            builder.AppendLine($"**{pokemonName} {GetIv(actionResponse.PokemonSpawn)}%**");
 
             var time = GetTime(actionResponse.PokemonSpawn.DisappearTime);
             var timeSpan = GetTimeSpan(actionResponse.PokemonSpawn.DisappearTime);
@@ -27,9 +27,14 @@ namespace GoSentinel.Services.Messages
             return builder.ToString();
         }
 
-        private string getIv(PokemonSpawn pokemon)
+        private string GetIv(PokemonSpawn pokemon)
         {
-            return ((pokemon.Attack + pokemon.Defense + pokemon.Stamina) / 45).ToString("0.0");
+            if (pokemon.Attack == null || pokemon.Defense == null || pokemon.Stamina == null)
+            {
+                return "?";
+            }
+
+            return ((pokemon.Attack.Value + pokemon.Defense.Value + pokemon.Stamina.Value) * 100 / 45f).ToString("0.0");
         }
 
         private string GetTimeSpan(DateTime disappearTime)
@@ -49,9 +54,9 @@ namespace GoSentinel.Services.Messages
             return disappearTime.ToLongTimeString();
         }
 
-        private string GetPokemonName(int pokemonId)
+        private string GetPokemonName(POGOProtos.Enums.PokemonId pokemonId)
         {
-            return ((POGOProtos.Enums.PokemonId)pokemonId).ToString();
+            return pokemonId.ToString();
         }
     }
 }

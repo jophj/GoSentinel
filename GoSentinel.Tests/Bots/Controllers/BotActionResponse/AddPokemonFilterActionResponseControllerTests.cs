@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using GoSentinel.Bots;
 using GoSentinel.Bots.Controllers.BotActionResponse;
 using GoSentinel.Data;
@@ -21,36 +22,40 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
         }
 
         [Fact]
-        public void Handle_WithWrongTypeActionResponseArgument_ShouldThrowArgumentException()
+        public async Task Handle_WithWrongTypeActionResponseArgument_ShouldThrowArgumentException()
         {
             var actionResponse = new NearestPokemonActionResponse();
 
-            void Handle() => _controller.Handle(null, actionResponse);
+            Task Handle() => _controller.HandleAsync(null, actionResponse);
 
-            Assert.Throws<ArgumentException>((Action) Handle);
+            await Assert.ThrowsAsync<ArgumentException>(Handle);
         }
 
         [Fact]
-        public void Handle_WithCorrectActionResponse_ShouldCallSendTextMessageAsync()
+        public async Task Handle_WithCorrectActionResponse_ShouldCallSendTextMessageAsync()
         {
             var actionResponse = MakeActionResponse();
             var botMock = new Mock<IBot>();
-            botMock.Setup(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()));
+            botMock
+                .Setup(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()))
+                .ReturnsAsync(new Message());
 
-            _controller.Handle(botMock.Object, actionResponse);
+            await _controller.HandleAsync(botMock.Object, actionResponse);
 
             botMock.Verify(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
-        public void Handle_WithCorrectActionResponse_ShouldCallSendTextMessageAsyncWithCorrectParameters()
+        public async Task Handle_WithCorrectActionResponse_ShouldCallSendTextMessageAsyncWithCorrectParameters()
         {
             var actionResponse = MakeActionResponse();
             var botMock = new Mock<IBot>();
-            botMock.Setup(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()));
+            botMock
+                .Setup(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()))
+                .ReturnsAsync(new Message());
             var msg = _messageService.Generate(actionResponse);
 
-            _controller.Handle(botMock.Object, actionResponse);
+            await _controller.HandleAsync(botMock.Object, actionResponse);
 
             botMock.Verify(b => b.SendTextMessageAsync(
                 It.Is<long>(i => i == actionResponse.Action.Message.Chat.Id),
