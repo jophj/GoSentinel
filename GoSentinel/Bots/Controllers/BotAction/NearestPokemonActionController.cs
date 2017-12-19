@@ -27,7 +27,6 @@ namespace GoSentinel.Bots.Controllers.BotAction
 
             var pokemon = _nearestPokemonService.GetNearest(action.PokemonName, 0, 0);
 
-            Console.WriteLine($"{action.GetType().Name} - {action.Message.From.Username} - {action.PokemonName}");
             return new NearestPokemonActionResponse()
             {
                 PokemonSpawn = pokemon,
