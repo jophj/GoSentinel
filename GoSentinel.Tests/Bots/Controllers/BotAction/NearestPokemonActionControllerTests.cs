@@ -1,4 +1,5 @@
 ﻿using System;
+using GoSentinel.Bots.Controllers;
 using GoSentinel.Bots.Controllers.BotAction;
 using GoSentinel.Data;
 using GoSentinel.Services.Actions;
@@ -9,7 +10,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotAction
 {
     public class NearestPokemonActionControllerTests
     {
-        private readonly NearestPokemonActionController _controller;
+        private readonly IActionController<NearestPokemonAction> _controller;
 
         public NearestPokemonActionControllerTests()
         {
@@ -17,24 +18,12 @@ namespace GoSentinel.Tests.Bots.Controllers.BotAction
         }
 
         [Fact]
-        public void Handle_WithNullArgument_ShouldThrowArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => _controller.Handle(null));
-        }
-
-        [Fact]
-        public void Handle_WithWrongTypeAction_ShouldThrowArgumentException()
+        public void Handle_WithNoPokemonName_ShouldThrowArgumentException()
         {
             var action = MakeNearestPokemonAction();
             action.PokemonName = null;
 
             Assert.Throws<ArgumentException>(() => _controller.Handle(action));
-        }
-
-        [Fact]
-        public void Handle_WithNoPokemonName_ShouldThrowArgumentException()
-        {
-            Assert.Throws<ArgumentException>(() => _controller.Handle(new AddPokemonFilterAction()));
         }
 
         [Fact]
