@@ -5,34 +5,18 @@ using Xunit;
 
 namespace GoSentinel.Tests.Bots.Controllers.BotAction
 {
-    public class GymStateActionTests
+    public class GymStateActionTests : ControllerTests<GymStateAction>
     {
-        private readonly GymStateActionController _controller;
-
-        public GymStateActionTests()
-        {
-            _controller = new GymStateActionController();
-        }
-
-        [Fact]
-        public void Handle_WithNullArgument_ShouldThrowArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => _controller.Handle(null));
-        }
-
-        [Fact]
-        public void Handle_WithWrongTypeAction_ShouldThrowArgumentException()
-        {
-            Assert.Throws<ArgumentException>(() => _controller.Handle(new NearestPokemonAction()));
-        }
+        public GymStateActionTests() : base(new GymStateActionController())
+        {}
 
         [Fact]
         public void Handle_WithNoGymName_ShouldThrowArgumentException()
         {
-            var action = MakeGymAction();
+            var action = MakeAction();
             action.GymName = null;
 
-            void Handle() => _controller.Handle(action);
+            void Handle() => Controller.Handle(action);
 
             Assert.Throws<ArgumentException>((Action) Handle);
         }
@@ -40,9 +24,9 @@ namespace GoSentinel.Tests.Bots.Controllers.BotAction
         [Fact]
         public void Handle_WithGymStateAction_ShouldReturnGymStateActionResponse()
         {
-            var action = MakeGymAction();
+            var action = MakeAction();
 
-            var response = _controller.Handle(action);
+            var response = Controller.Handle(action);
 
             Assert.IsType<GymStateActionResponse>(response);
         }
@@ -50,9 +34,9 @@ namespace GoSentinel.Tests.Bots.Controllers.BotAction
         [Fact]
         public void Handle_WithGymStateAction_ShouldReturnGymStateActionResponseWithAction()
         {
-            var action = MakeGymAction();
+            var action = MakeAction();
 
-            var response = _controller.Handle(action) as GymStateActionResponse;
+            var response = Controller.Handle(action) as GymStateActionResponse;
 
             Assert.NotNull(response?.Action);
         }
@@ -64,16 +48,16 @@ namespace GoSentinel.Tests.Bots.Controllers.BotAction
         [InlineData("路边的玛利亚")]
         public void Handle_WithGymStateAction_ShouldReturnGymStateActionResponseWithGymName(string gymName)
         {
-            var action = MakeGymAction();
+            var action = MakeAction();
             action.GymName = gymName;
 
-            var response = _controller.Handle(action) as GymStateActionResponse;
+            var response = Controller.Handle(action) as GymStateActionResponse;
 
             Assert.NotNull(response?.Gym.Name);
             Assert.Equal(gymName, response?.Gym.Name);
         }
 
-        private GymStateAction MakeGymAction()
+        protected override GymStateAction MakeAction()
         {
             return new GymStateAction()
             {
