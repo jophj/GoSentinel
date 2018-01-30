@@ -46,10 +46,10 @@ namespace GoSentinel.Tests.Bots.Controllers.BotAction
             var response = Controller.Handle(action) as NearestPokemonActionResponse;
 
             Assert.NotNull(response);
-            Assert.NotNull(response.PokemonSpawn);
-            Assert.True(response.PokemonSpawn.Latitude > 0);
-            Assert.True(response.PokemonSpawn.Longitude > 0);
-            Assert.True(response.PokemonSpawn.PokemonId > 0);
+            Assert.NotNull(response.SpawnPokemon);
+            Assert.True(response.SpawnPokemon.Latitude > 0);
+            Assert.True(response.SpawnPokemon.Longitude > 0);
+            Assert.True(response.SpawnPokemon.PokemonId > 0);
         }
 
         protected override NearestPokemonAction MakeAction()

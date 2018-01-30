@@ -29,7 +29,7 @@ namespace GoSentinel.Bots.Controllers.BotAction
 
             return new NearestPokemonActionResponse()
             {
-                PokemonSpawn = pokemon,
+                SpawnPokemon = pokemon,
                 Action = action
             };
         }

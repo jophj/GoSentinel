@@ -5,9 +5,9 @@ using Xunit;
 
 namespace GoSentinel.Tests.Bots.Controllers.BotAction
 {
-    public class GymStateActionTests : ControllerTests<GymStateAction>
+    public class GymStateActionControllerTests : ControllerTests<GymStateAction>
     {
-        public GymStateActionTests() : base(new GymStateActionController())
+        public GymStateActionControllerTests() : base(new GymStateActionController())
         {}
 
         [Fact]
@@ -55,6 +55,27 @@ namespace GoSentinel.Tests.Bots.Controllers.BotAction
 
             Assert.NotNull(response?.Gym.Name);
             Assert.Equal(gymName, response?.Gym.Name);
+        }
+
+        [Fact]
+        public void Handle_WithGymStateAction_ShouldReturnGymStateActionResponseWithGymId()
+        {
+            var action = MakeAction();
+
+            var response = Controller.Handle(action) as GymStateActionResponse;
+
+            Assert.NotNull(response?.Gym.Id);
+            Assert.False(string.IsNullOrEmpty(response?.Gym.Id));
+        }
+
+        [Fact]
+        public void Handle_WithGymStateAction_ShouldReturnGymStateActionResponseWithPokemons()
+        {
+            var action = MakeAction();
+
+            var response = Controller.Handle(action) as GymStateActionResponse;
+
+            Assert.NotNull(response?.Gym.Pokemons);
         }
 
         protected override GymStateAction MakeAction()

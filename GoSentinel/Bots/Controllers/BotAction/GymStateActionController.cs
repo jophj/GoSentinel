@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using GoSentinel.Data;
 using GoSentinel.Models;
 
@@ -23,7 +26,9 @@ namespace GoSentinel.Bots.Controllers.BotAction
                 Action = action,
                 Gym = new Gym()
                 {
-                    Name = action.GymName
+                    Id = "gymId",
+                    Name = action.GymName,
+                    Pokemons = new Collection<DefenderPokemon>()
                 }
             };
         }

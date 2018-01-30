@@ -26,9 +26,9 @@ namespace GoSentinel.Bots.Controllers.BotActionResponse
                 throw new ArgumentException();
             }
 
-            if (actionResponse.PokemonSpawn == null)
+            if (actionResponse.SpawnPokemon == null)
             {
-                throw new ArgumentException("PokemonSpawn cannot be null");
+                throw new ArgumentException("SpawnPokemon cannot be null");
             }
 
             var msg = _messageService.Generate(actionResponse);
@@ -37,8 +37,8 @@ namespace GoSentinel.Bots.Controllers.BotActionResponse
                 await bot.SendTextMessageAsync(actionResponse.Action.Message.Chat.Id, msg);
                 await bot.SendLocationAsync(
                     actionResponse.Action.Message.Chat.Id,
-                    actionResponse.PokemonSpawn.Latitude,
-                    actionResponse.PokemonSpawn.Longitude
+                    actionResponse.SpawnPokemon.Latitude,
+                    actionResponse.SpawnPokemon.Longitude
                 );
             }
             catch(Exception e)

@@ -1,6 +1,7 @@
 ﻿using System;
 using GoSentinel.Data;
 using GoSentinel.Models;
+using GoSentinel.Models;
 using GoSentinel.Services.Messages;
 using POGOProtos.Enums;
 using Telegram.Bot.Types;
@@ -33,14 +34,14 @@ namespace GoSentinel.Tests.Services.Messages
         public void Generate_WithPokemonSpawn_ShouldHaveFormattedFirstLine(PokemonId pokemonId, int atk, string pokemonName)
         {
             var actionResponse = MakeActionResponse(MakePokemonSpawn());
-            actionResponse.PokemonSpawn.PokemonId = pokemonId;
-            actionResponse.PokemonSpawn.Attack = atk;
+            actionResponse.SpawnPokemon.PokemonId = pokemonId;
+            actionResponse.SpawnPokemon.Attack = atk;
 
             var message = _service.Generate(actionResponse);
             var iv = ((
-                          actionResponse.PokemonSpawn.Attack.Value +
-                          actionResponse.PokemonSpawn.Defense.Value +
-                          actionResponse.PokemonSpawn.Stamina.Value
+                          actionResponse.SpawnPokemon.Attack.Value +
+                          actionResponse.SpawnPokemon.Defense.Value +
+                          actionResponse.SpawnPokemon.Stamina.Value
                       ) * 100 / 45f).ToString("0.0");
 
             var lines = message.Split(Environment.NewLine);
@@ -57,12 +58,12 @@ namespace GoSentinel.Tests.Services.Messages
         public void Generate_WithPokemonSpawn_ShouldHaveFormattedTime(int timeSpan)
         {
             var actionResponse = MakeActionResponse(MakePokemonSpawn());
-            actionResponse.PokemonSpawn.DisappearTime = DateTime.Now.AddSeconds(timeSpan);
+            actionResponse.SpawnPokemon.DisappearTime = DateTime.Now.AddSeconds(timeSpan);
 
             var message = _service.Generate(actionResponse);
             var lines = message.Split(Environment.NewLine);
 
-            Assert.Matches($"Available until {actionResponse.PokemonSpawn.DisappearTime.ToLongTimeString()}.*", lines[1]);
+            Assert.Matches($"Available until {actionResponse.SpawnPokemon.DisappearTime.ToLongTimeString()}.*", lines[1]);
         }
 
         [Theory]
@@ -74,7 +75,7 @@ namespace GoSentinel.Tests.Services.Messages
         public void Generate_WithPokemonSpawn_ShouldHaveFormattedTimeSpan(int timeSpan, string timeSpanFormatted)
         {
             var actionResponse = MakeActionResponse(MakePokemonSpawn());
-            actionResponse.PokemonSpawn.DisappearTime = DateTime.Now.AddSeconds(timeSpan + 1);
+            actionResponse.SpawnPokemon.DisappearTime = DateTime.Now.AddSeconds(timeSpan + 1);
 
             var message = _service.Generate(actionResponse);
             var lines = message.Split(Environment.NewLine);
@@ -90,8 +91,8 @@ namespace GoSentinel.Tests.Services.Messages
         public void Generate_WithPokemonSpawn_ShouldHaveFormattedCpAndLevel(int cp, string lineFormatted)
         {
             var actionResponse = MakeActionResponse(MakePokemonSpawn());
-            actionResponse.PokemonSpawn.Cp = cp;
-            actionResponse.PokemonSpawn.Level = cp / 10;
+            actionResponse.SpawnPokemon.Cp = cp;
+            actionResponse.SpawnPokemon.Level = cp / 10;
 
             var message = _service.Generate(actionResponse);
             var lines = message.Split(Environment.NewLine);
@@ -99,9 +100,9 @@ namespace GoSentinel.Tests.Services.Messages
             Assert.Equal(lineFormatted, lines[2]);
         }
 
-        private PokemonSpawn MakePokemonSpawn()
+        private SpawnPokemon MakePokemonSpawn()
         {
-            return new PokemonSpawn()
+            return new SpawnPokemon()
             {
                 SpawnpointId = "",
                 PokemonId = 0,
@@ -116,11 +117,11 @@ namespace GoSentinel.Tests.Services.Messages
             };
         }
 
-        private NearestPokemonActionResponse MakeActionResponse(PokemonSpawn spawn)
+        private NearestPokemonActionResponse MakeActionResponse(SpawnPokemon spawn)
         {
             return new NearestPokemonActionResponse()
             {
-                PokemonSpawn = spawn,
+                SpawnPokemon = spawn,
                 Action = new NearestPokemonAction()
                 {
                     Message = new Message()
