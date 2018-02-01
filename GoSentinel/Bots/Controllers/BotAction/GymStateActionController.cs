@@ -1,14 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using GoSentinel.Data;
-using GoSentinel.Models;
+using GoSentinel.Services;
 
 namespace GoSentinel.Bots.Controllers.BotAction
 {
     public class GymStateActionController : IActionController<GymStateAction>
     {
+        private readonly IGymByNameService _gymByNameService;
+
+        public GymStateActionController(IGymByNameService gymByNameService)
+        {
+            _gymByNameService = gymByNameService;
+        }
+
         public IActionResponse Handle(IAction baseAction)
         {
             if (baseAction == null)
@@ -21,15 +25,12 @@ namespace GoSentinel.Bots.Controllers.BotAction
                 throw new ArgumentException();
             }
 
+            var gym = _gymByNameService.GetGym(action.GymName);
+
             return new GymStateActionResponse()
             {
                 Action = action,
-                Gym = new Gym()
-                {
-                    Id = "gymId",
-                    Name = action.GymName,
-                    Pokemons = new Collection<DefenderPokemon>()
-                }
+                Gym = gym
             };
         }
     }

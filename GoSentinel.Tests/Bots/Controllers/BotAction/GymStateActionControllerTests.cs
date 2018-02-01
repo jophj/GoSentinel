@@ -1,14 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
 using GoSentinel.Bots.Controllers.BotAction;
 using GoSentinel.Data;
+using GoSentinel.Models;
+using GoSentinel.Services;
+using Moq;
 using Xunit;
 
 namespace GoSentinel.Tests.Bots.Controllers.BotAction
 {
     public class GymStateActionControllerTests : ControllerTests<GymStateAction>
     {
-        public GymStateActionControllerTests() : base(new GymStateActionController())
-        {}
+        public GymStateActionControllerTests()
+        {
+            Mock<IGymByNameService> serviceStub = new Mock<IGymByNameService>();
+
+            serviceStub
+                .Setup(s => s.GetGym(It.IsAny<string>()))
+                .Returns<string>(gymName => new Gym()
+                {
+                    Id = gymName + "Id",
+                    Name = gymName,
+                    Pokemons = new List<DefenderPokemon>()
+                });
+
+            base.Controller = new GymStateActionController(serviceStub.Object);
+        }
 
         [Fact]
         public void Handle_WithNoGymName_ShouldThrowArgumentException()
@@ -65,7 +82,8 @@ namespace GoSentinel.Tests.Bots.Controllers.BotAction
             var response = Controller.Handle(action) as GymStateActionResponse;
 
             Assert.NotNull(response?.Gym.Id);
-            Assert.False(string.IsNullOrEmpty(response?.Gym.Id));
+            Assert.False(string.IsNullOrEmpty(response.Gym.Id));
+            Assert.Equal(action.GymName+"Id", response.Gym.Id);
         }
 
         [Fact]

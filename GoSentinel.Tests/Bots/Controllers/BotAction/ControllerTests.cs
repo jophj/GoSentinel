@@ -8,7 +8,10 @@ namespace GoSentinel.Tests.Bots.Controllers.BotAction
 {
     public abstract class ControllerTests<T> where T : IAction
     {
-        protected IActionController<T> Controller { get; }
+        protected IActionController<T> Controller { get; set; }
+
+        protected ControllerTests()
+        {}
 
         protected ControllerTests(IActionController<T> controller)
         {
