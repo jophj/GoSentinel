@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GoSentinel.Models;
+﻿using GoSentinel.Models;
 
 namespace GoSentinel.Services
 {
-    public interface IGymByNameService
+    public interface IGymIdByNameService
     {
-        Gym GetGym(string gymName);
+        string GetGymId(string gymName);
     }
 }

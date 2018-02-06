@@ -6,11 +6,13 @@ namespace GoSentinel.Bots.Controllers.BotAction
 {
     public class GymStateActionController : IActionController<GymStateAction>
     {
-        private readonly IGymByNameService _gymByNameService;
+        private readonly IGymIdByNameService _gymIdByNameService;
+        private readonly IGymStateService _gymStateService;
 
-        public GymStateActionController(IGymByNameService gymByNameService)
+        public GymStateActionController(IGymIdByNameService gymIdByNameService, IGymStateService gymStateService)
         {
-            _gymByNameService = gymByNameService;
+            _gymIdByNameService = gymIdByNameService;
+            _gymStateService = gymStateService;
         }
 
         public IActionResponse Handle(IAction baseAction)
@@ -25,12 +27,13 @@ namespace GoSentinel.Bots.Controllers.BotAction
                 throw new ArgumentException();
             }
 
-            var gym = _gymByNameService.GetGym(action.GymName);
+            string gymId = _gymIdByNameService.GetGymId(action.GymName);
+            var gym = _gymStateService.GetGymState(gymId);
 
             return new GymStateActionResponse()
             {
                 Action = action,
-                Gym = gym
+                GymState = gym
             };
         }
     }

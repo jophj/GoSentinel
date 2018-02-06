@@ -1,4 +1,4 @@
-﻿using GoSentinel.Models;
+﻿using GymState = GoSentinel.Models.GymState;
 
 namespace GoSentinel.Data
 {
@@ -11,6 +11,6 @@ namespace GoSentinel.Data
     public class GymStateActionResponse : IActionResponse<GymStateAction>
     {
         public GymStateAction Action { get; set; }
-        public Gym Gym { get; set; }
+        public GymState GymState { get; set; }
     }
 }
