@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ApiAiSDK;
-using GoSentinel.Bots.Controllers;
+﻿using GoSentinel.Bots.Controllers;
 using GoSentinel.Data;
 using GoSentinel.Services;
 using Microsoft.AspNetCore.Builder;

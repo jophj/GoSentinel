@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Remove="Models\SpawnPokemon.cs" />
+    <Compile Remove="Services\Actions\FakeGymIdByNameService.cs" />
   </ItemGroup>
 
   <ItemGroup>

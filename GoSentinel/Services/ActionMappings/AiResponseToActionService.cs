@@ -9,13 +9,15 @@ namespace GoSentinel.Services.ActionMappings
     {
         public AiResponseToActionService(
             PokemonFilterMapping pokemonFilterMapping,
-            NearestPokemonMapping nearestPokemonMapping
+            NearestPokemonMapping nearestPokemonMapping,
+            GymStateMapping gymStateMapping
         )
         {
             _actionMap = new Dictionary<string, Func<AIResponse, IAction>>()
             {
                 { BotAction.AddPokemonFilter, pokemonFilterMapping.Map },
-                { BotAction.NearestPokemon, nearestPokemonMapping.Map }
+                { BotAction.NearestPokemon, nearestPokemonMapping.Map },
+                { BotAction.GymStateRequest, gymStateMapping.Map }
             };
         }
 
