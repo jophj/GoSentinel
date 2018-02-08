@@ -111,7 +111,8 @@ namespace GoSentinel.Tests.Bots.Controllers.BotAction
 
             Assert.NotNull(response?.GymState.Id);
             Assert.False(string.IsNullOrEmpty(response.GymState.Id));
-            Assert.Equal(action.GymName+"Id", response.GymState.Id);
+            // gymStateServiceStub uses gym name as mock gym id
+            Assert.Equal(action.GymName, response.GymState.Id);
         }
 
         [Fact]
