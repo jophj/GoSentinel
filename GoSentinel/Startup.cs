@@ -11,7 +11,6 @@ using GoSentinel.Data;
 using GoSentinel.Services.Actions;
 using GoSentinel.Services.ActionMappings;
 using GoSentinel.Services.Messages;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace GoSentinel
 {
@@ -38,12 +37,15 @@ namespace GoSentinel
 
             services.AddSingleton<IActionController<AddPokemonFilterAction>, AddPokemonFilterActionController>();
             services.AddSingleton<IActionController<NearestPokemonAction>, NearestPokemonActionController>();
+            services.AddSingleton<IActionController<GymStateAction>, GymStateActionController>();
 
             services.AddSingleton<IActionResponseController<AddPokemonFilterActionResponse>, AddPokemonFilterActionResponseController>();
             services.AddSingleton<IActionResponseController<NearestPokemonActionResponse>, NearestPokemonActionResponseController>();
 
             services.AddSingleton<IPokemonFilterService, LogPokemonFilterService>();
             services.AddSingleton<INearestPokemonService, FakeNearestPokemonService>();
+            services.AddSingleton<IGymIdByNameService, FakeGymIdByNameService>();
+            services.AddSingleton<IGymStateService, FakeGymStateService>();
 
             services.AddSingleton<IMessageService<AddPokemonFilterActionResponse>, AddPokemonFilterMessageService>();
             services.AddSingleton<IMessageService<NearestPokemonActionResponse>, PokemonSpawnMessageService>();
@@ -53,6 +55,7 @@ namespace GoSentinel
 
             services.AddSingleton<PokemonFilterMapping, PokemonFilterMapping>();
             services.AddSingleton<NearestPokemonMapping, NearestPokemonMapping>();
+            services.AddSingleton<GymStateMapping, GymStateMapping>();
 
             var apiAiConfig = Configuration.GetSection("ApiAiConfiguration").Get<ApiAiConfiguration>();
             var config =

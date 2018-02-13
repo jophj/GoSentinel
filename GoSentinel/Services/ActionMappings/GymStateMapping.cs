@@ -11,7 +11,7 @@ namespace GoSentinel.Services.ActionMappings
             string gymName;
             try
             {
-                gymName = response.Result.Parameters["GymName"].ToString();
+                gymName = response.Result.Parameters["gymName"].ToString();
             }
             catch (Exception e)
             {

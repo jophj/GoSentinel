@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\SpawnPokemon.cs" />
+    <Compile Remove="Services\Actions\FakeGymIdByNameService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Common\" />
   </ItemGroup>

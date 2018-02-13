@@ -36,7 +36,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
         public async Task Handle_WithNoPokemonSpawn_ShouldThrowArgumentException()
         {
             var actionResponse = MakeActionResponse();
-            actionResponse.PokemonSpawn = null;
+            actionResponse.SpawnPokemon = null;
 
             Task Handle() => _controller.HandleAsync(null, actionResponse);
 
@@ -82,8 +82,8 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
 
             botMock.Verify(b => b.SendLocationAsync(
                 actionResponse.Action.Message.Chat.Id,
-                actionResponse.PokemonSpawn.Latitude,
-                actionResponse.PokemonSpawn.Longitude
+                actionResponse.SpawnPokemon.Latitude,
+                actionResponse.SpawnPokemon.Longitude
             ), Times.Once);
         }
 
@@ -117,7 +117,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
         {
             return new NearestPokemonActionResponse()
             {
-                PokemonSpawn = new PokemonSpawn(),
+                SpawnPokemon = new SpawnPokemon(),
                 Action = new NearestPokemonAction()
                 {
                     PokemonName = "Dratini",
