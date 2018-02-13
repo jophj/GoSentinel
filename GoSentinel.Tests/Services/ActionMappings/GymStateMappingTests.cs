@@ -44,7 +44,7 @@ namespace GoSentinel.Tests.Services.ActionMappings
         public void Map_WithGymName_ShouldReturnGymNameInAction(string gymName)
         {
             AIResponse aiResponse = MakeAIResponse();
-            aiResponse.Result.Parameters["GymName"] = gymName;
+            aiResponse.Result.Parameters["gymName"] = gymName;
 
             var action = _gymStateMapping.Map(aiResponse);
 
@@ -55,7 +55,7 @@ namespace GoSentinel.Tests.Services.ActionMappings
         public void Map_WithNullGymName_ShouldReturnNullGymName()
         {
             AIResponse aiResponse = MakeAIResponse();
-            aiResponse.Result.Parameters["GymName"] = null;
+            aiResponse.Result.Parameters["gymName"] = null;
 
             var action = _gymStateMapping.Map(aiResponse);
 
