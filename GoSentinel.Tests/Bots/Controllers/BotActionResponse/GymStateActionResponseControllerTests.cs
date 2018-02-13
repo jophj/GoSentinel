@@ -61,13 +61,20 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
                                 Id = 666,
                                 PokemonId = PokemonId.Kingler,
                                 Cp = 2456,
-                                DisplayCp = 345
+                                DisplayCp = 345,
+                                OwnerName = "Ovit"
                             },
-                            TrainerPublicProfile = new PlayerPublicProfile()
+                        },
+                        new GymMembership()
+                        {
+                            PokemonData = new PokemonData()
                             {
-                                Name = "Ovit",
-                                TeamColor = TeamColor.Red
-                            }
+                                Id = 1234,
+                                PokemonId = PokemonId.Snorlax,
+                                Cp = 3212,
+                                DisplayCp = 2232,
+                                OwnerName = "Naashira"
+                            },
                         }
                     }
                 },
