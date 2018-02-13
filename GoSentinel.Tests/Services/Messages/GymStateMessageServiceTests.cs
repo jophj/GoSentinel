@@ -44,7 +44,7 @@ namespace GoSentinel.Tests.Services.Messages
             var message = _service.Generate(actionResponse);
 
             var lines = message.Split(Environment.NewLine);
-            Assert.Equal($"*{actionResponse.GymState.Name}* at {actionResponse.GymState.Timestamp}", lines[0]);
+            Assert.Equal($":red_hearth: *{actionResponse.GymState.Name}* at {actionResponse.GymState.Timestamp}", lines[0]);
         }
 
         protected GymStateActionResponse MakeActionResponse()
