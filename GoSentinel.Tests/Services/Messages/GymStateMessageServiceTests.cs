@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Google.Protobuf.Collections;
 using GoSentinel.Data;
 using GoSentinel.Services.Messages;
@@ -14,6 +15,14 @@ namespace GoSentinel.Tests.Services.Messages
 {
     public class GymStateMessageServiceTests
     {
+        private readonly Dictionary<TeamColor, string> _teamColorEmoji = new Dictionary<TeamColor, string>()
+        {
+            { TeamColor.Red, ":red_hearth:"},
+            { TeamColor.Blue, ":blue_hearth:"},
+            { TeamColor.Yellow, ":yellow_hearth:"},
+            { TeamColor.Neutral, ":white_circle:" }
+        };
+
         private readonly GymStateMessageService _service;
 
         public GymStateMessageServiceTests()
@@ -47,6 +56,22 @@ namespace GoSentinel.Tests.Services.Messages
             Assert.Equal($":red_hearth: *{actionResponse.GymState.Name}* at {actionResponse.GymState.Timestamp}", lines[0]);
         }
 
+        [Theory]
+        [InlineData(TeamColor.Red)]
+        [InlineData(TeamColor.Blue)]
+        [InlineData(TeamColor.Yellow)]
+        [InlineData(TeamColor.Neutral)]
+        public void Generate_WithDifferentGymColor_ShouldUseCorrectEmoji(TeamColor teamColor)
+        {
+            var actionResponse = MakeActionResponse();
+            actionResponse.GymState.OwnedByTeam = teamColor;
+
+            var message = _service.Generate(actionResponse);
+
+            var lines = message.Split(Environment.NewLine);
+            Assert.StartsWith(_teamColorEmoji[teamColor], lines[0]);
+        }
+
         protected GymStateActionResponse MakeActionResponse()
         {
             return new GymStateActionResponse()
@@ -66,12 +91,8 @@ namespace GoSentinel.Tests.Services.Messages
                                 Id = 666,
                                 PokemonId = PokemonId.Kingler,
                                 Cp = 2456,
-                                DisplayCp = 345
-                            },
-                            TrainerPublicProfile = new PlayerPublicProfile()
-                            {
-                                Name = "Ovit",
-                                TeamColor = TeamColor.Red
+                                DisplayCp = 345,
+                                OwnerName = "Ovit"
                             }
                         }
                     }

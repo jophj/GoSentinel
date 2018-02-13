@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using GoSentinel.Data;
 using POGOProtos.Enums;
@@ -34,7 +35,10 @@ namespace GoSentinel.Services.Messages
             messageBuilder.Append($" at {actionResponse.GymState.Timestamp}");
             messageBuilder.AppendLine();
 
-
+            var membershipMessageLines = actionResponse.GymState.Memberships.Select(gs =>
+            {
+                return $"{gs.PokemonData.PokemonId.ToString()}";
+            });
 
             return messageBuilder.ToString();
         }
