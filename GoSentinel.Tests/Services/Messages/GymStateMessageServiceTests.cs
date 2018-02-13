@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Google.Protobuf.Collections;
 using GoSentinel.Data;
 using GoSentinel.Services.Messages;
@@ -72,6 +73,37 @@ namespace GoSentinel.Tests.Services.Messages
             Assert.StartsWith(_teamColorEmoji[teamColor], lines[0]);
         }
 
+        [Fact]
+        public void Generate_WithGymMembers_ShouldHaveALineForEachMember()
+        {
+            var actionResponse = MakeActionResponse();
+
+            var message = _service.Generate(actionResponse);
+
+            var lineCount = message.Trim().Split(Environment.NewLine).Length;
+            Assert.Equal(lineCount - 1, actionResponse.GymState.Memberships.Count);
+        }
+
+        [Fact]
+        public void Generate_WithGymMembers_ShouldHaveFormattedLineForEachMember()
+        {
+            var actionResponse = MakeActionResponse();
+
+            var message = _service.Generate(actionResponse);
+
+            var lines = message.Trim().Split(Environment.NewLine).Skip(1);
+            int i = 0;
+            foreach (string line in lines)
+            {
+                string expectedLine = $"{i + 1}. ";
+                expectedLine += $"{actionResponse.GymState.Memberships[i].PokemonData.PokemonId.ToString()} ";
+                expectedLine += $"{actionResponse.GymState.Memberships[i].PokemonData.DisplayCp} - ";
+                expectedLine += $"{actionResponse.GymState.Memberships[i].PokemonData.OwnerName}";
+                Assert.Equal(expectedLine, line);
+                i += 1;
+            }
+        }
+
         protected GymStateActionResponse MakeActionResponse()
         {
             return new GymStateActionResponse()
@@ -93,6 +125,17 @@ namespace GoSentinel.Tests.Services.Messages
                                 Cp = 2456,
                                 DisplayCp = 345,
                                 OwnerName = "Ovit"
+                            }
+                        },
+                        new GymMembership()
+                        {
+                            PokemonData = new PokemonData()
+                            {
+                                Id = 666,
+                                PokemonId = PokemonId.Snorlax,
+                                Cp = 3456,
+                                DisplayCp = 423,
+                                OwnerName = "Naashira"
                             }
                         }
                     }

@@ -35,10 +35,14 @@ namespace GoSentinel.Services.Messages
             messageBuilder.Append($" at {actionResponse.GymState.Timestamp}");
             messageBuilder.AppendLine();
 
-            var membershipMessageLines = actionResponse.GymState.Memberships.Select(gs =>
+            var membershipMessageLines = actionResponse.GymState.Memberships.Select((gs, i) =>
+                $"{i + 1}. {gs.PokemonData.PokemonId.ToString()} {gs.PokemonData.DisplayCp} - {gs.PokemonData.OwnerName}"
+            );
+
+            foreach (string line in membershipMessageLines)
             {
-                return $"{gs.PokemonData.PokemonId.ToString()}";
-            });
+                messageBuilder.AppendLine(line);
+            }
 
             return messageBuilder.ToString();
         }
