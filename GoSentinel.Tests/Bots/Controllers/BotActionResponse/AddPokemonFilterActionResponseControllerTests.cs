@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using GoSentinel.Bots;
+using GoSentinel.Bots.Controllers;
 using GoSentinel.Bots.Controllers.BotActionResponse;
 using GoSentinel.Data;
 using GoSentinel.Services.Messages;
@@ -10,15 +11,26 @@ using Xunit;
 
 namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
 {
-    public class AddPokemonFilterActionResponseControllerTests
+    public abstract class ActionResponseControllerTests<T> where T : IActionResponse
     {
-        private readonly AddPokemonFilterActionResponseController _controller;
+        protected IActionResponseController<T> Controller;
+
+        protected ActionResponseControllerTests() { }
+
+        protected ActionResponseControllerTests(IActionResponseController<T> controller)
+        {
+            Controller = controller;
+        }
+    }
+
+    public class AddPokemonFilterActionResponseControllerTests : ActionResponseControllerTests<AddPokemonFilterActionResponse>
+    {
         private readonly AddPokemonFilterMessageService _messageService;
 
         public AddPokemonFilterActionResponseControllerTests()
         {
             _messageService = new AddPokemonFilterMessageService();
-            _controller = new AddPokemonFilterActionResponseController(_messageService);
+            base.Controller = new AddPokemonFilterActionResponseController(_messageService);
         }
 
         [Fact]
@@ -26,7 +38,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
         {
             var actionResponse = new NearestPokemonActionResponse();
 
-            Task Handle() => _controller.HandleAsync(null, actionResponse);
+            Task Handle() => Controller.HandleAsync(null, actionResponse);
 
             await Assert.ThrowsAsync<ArgumentException>(Handle);
         }
@@ -40,7 +52,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
                 .Setup(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()))
                 .ReturnsAsync(new Message());
 
-            await _controller.HandleAsync(botMock.Object, actionResponse);
+            await Controller.HandleAsync(botMock.Object, actionResponse);
 
             botMock.Verify(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()), Times.Once);
         }
@@ -55,7 +67,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
                 .ReturnsAsync(new Message());
             var msg = _messageService.Generate(actionResponse);
 
-            await _controller.HandleAsync(botMock.Object, actionResponse);
+            await Controller.HandleAsync(botMock.Object, actionResponse);
 
             botMock.Verify(b => b.SendTextMessageAsync(
                 It.Is<long>(i => i == actionResponse.Action.Message.Chat.Id),
