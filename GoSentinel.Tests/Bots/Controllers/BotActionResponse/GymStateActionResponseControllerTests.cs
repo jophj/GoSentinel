@@ -1,21 +1,46 @@
-﻿using Google.Protobuf.Collections;
+﻿using System.Threading.Tasks;
+using Google.Protobuf.Collections;
+using GoSentinel.Bots;
 using GoSentinel.Bots.Controllers.BotActionResponse;
 using GoSentinel.Data;
 using GoSentinel.Services.Messages;
+using Moq;
 using POGOProtos.Data;
 using POGOProtos.Data.Gym;
 using POGOProtos.Data.Player;
 using POGOProtos.Enums;
 using Telegram.Bot.Types;
+using Xunit;
 using GymState = GoSentinel.Models.GymState;
 
 namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
 {
     public class GymStateActionResponseControllerTests : ActionResponseControllerTests<GymStateActionResponse, GymStateAction>
     {
+        private readonly IMessageService<GymStateActionResponse> _messageService;
+
         public GymStateActionResponseControllerTests()
         {
-            base.Controller = new GymStateActionResponseController(new GymStateMessageService());
+            _messageService = new GymStateMessageService();
+            base.Controller = new GymStateActionResponseController(_messageService);
+        }
+
+        [Fact]
+        public async Task Handle_WithCorrectActionResponse_ShouldCallSendTextMessageAsyncWithGeneratedMessage()
+        {
+            var actionResponse = MakeActionResponse();
+            var botMock = new Mock<IBot>();
+            botMock
+                .Setup(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()))
+                .ReturnsAsync(new Message());
+            var msg = _messageService.Generate(actionResponse);
+
+            await Controller.HandleAsync(botMock.Object, actionResponse);
+
+            botMock.Verify(b => b.SendTextMessageAsync(
+                It.Is<long>(i => i == actionResponse.Action.Message.Chat.Id),
+                It.Is<string>(e => e == msg)
+            ), Times.Once);
         }
 
         protected override GymStateActionResponse MakeActionResponse()
