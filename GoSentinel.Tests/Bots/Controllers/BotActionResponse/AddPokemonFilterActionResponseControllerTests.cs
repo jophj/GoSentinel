@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using GoSentinel.Bots;
-using GoSentinel.Bots.Controllers;
 using GoSentinel.Bots.Controllers.BotActionResponse;
 using GoSentinel.Data;
 using GoSentinel.Services.Messages;
@@ -11,19 +9,7 @@ using Xunit;
 
 namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
 {
-    public abstract class ActionResponseControllerTests<T> where T : IActionResponse
-    {
-        protected IActionResponseController<T> Controller;
-
-        protected ActionResponseControllerTests() { }
-
-        protected ActionResponseControllerTests(IActionResponseController<T> controller)
-        {
-            Controller = controller;
-        }
-    }
-
-    public class AddPokemonFilterActionResponseControllerTests : ActionResponseControllerTests<AddPokemonFilterActionResponse>
+    public class AddPokemonFilterActionResponseControllerTests : ActionResponseControllerTests<AddPokemonFilterActionResponse, AddPokemonFilterAction>
     {
         private readonly AddPokemonFilterMessageService _messageService;
 
@@ -34,31 +20,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
         }
 
         [Fact]
-        public async Task Handle_WithWrongTypeActionResponseArgument_ShouldThrowArgumentException()
-        {
-            var actionResponse = new NearestPokemonActionResponse();
-
-            Task Handle() => Controller.HandleAsync(null, actionResponse);
-
-            await Assert.ThrowsAsync<ArgumentException>(Handle);
-        }
-
-        [Fact]
-        public async Task Handle_WithCorrectActionResponse_ShouldCallSendTextMessageAsync()
-        {
-            var actionResponse = MakeActionResponse();
-            var botMock = new Mock<IBot>();
-            botMock
-                .Setup(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()))
-                .ReturnsAsync(new Message());
-
-            await Controller.HandleAsync(botMock.Object, actionResponse);
-
-            botMock.Verify(b => b.SendTextMessageAsync(It.IsAny<long>(), It.IsAny<string>()), Times.Once);
-        }
-
-        [Fact]
-        public async Task Handle_WithCorrectActionResponse_ShouldCallSendTextMessageAsyncWithCorrectParameters()
+        public async Task Handle_WithCorrectActionResponse_ShouldCallSendTextMessageAsyncWithGeneratedMessage()
         {
             var actionResponse = MakeActionResponse();
             var botMock = new Mock<IBot>();
@@ -72,10 +34,10 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
             botMock.Verify(b => b.SendTextMessageAsync(
                 It.Is<long>(i => i == actionResponse.Action.Message.Chat.Id),
                 It.Is<string>(e => e == msg)
-                ), Times.Once);
+            ), Times.Once);
         }
 
-        private AddPokemonFilterActionResponse MakeActionResponse()
+        protected override AddPokemonFilterActionResponse MakeActionResponse()
         {
             return new AddPokemonFilterActionResponse()
             {
