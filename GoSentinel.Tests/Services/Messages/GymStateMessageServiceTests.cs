@@ -6,7 +6,6 @@ using GoSentinel.Data;
 using GoSentinel.Services.Messages;
 using POGOProtos.Data;
 using POGOProtos.Data.Gym;
-using POGOProtos.Data.Player;
 using POGOProtos.Enums;
 using Telegram.Bot.Types;
 using Xunit;
@@ -22,6 +21,13 @@ namespace GoSentinel.Tests.Services.Messages
             { TeamColor.Blue, ":blue_hearth:"},
             { TeamColor.Yellow, ":yellow_hearth:"},
             { TeamColor.Neutral, ":white_circle:" }
+        };
+
+        private readonly float[] _cpThresholds = new float[]
+        {
+            0,
+            .4666f,
+            .7333f
         };
 
         private readonly GymStateMessageService _service;
@@ -95,10 +101,13 @@ namespace GoSentinel.Tests.Services.Messages
             int i = 0;
             foreach (string line in lines)
             {
+                PokemonData pokemonData = actionResponse.GymState.Memberships[i].PokemonData;
+                int runs = _cpThresholds.Count(cpt => ((double)pokemonData.Cp / (double)pokemonData.DisplayCp) > cpt);
+
                 string expectedLine = $"{i + 1}. ";
-                expectedLine += $"{actionResponse.GymState.Memberships[i].PokemonData.PokemonId.ToString()} ";
-                expectedLine += $"{actionResponse.GymState.Memberships[i].PokemonData.DisplayCp} - ";
-                expectedLine += $"{actionResponse.GymState.Memberships[i].PokemonData.OwnerName}";
+                expectedLine += $"{pokemonData.PokemonId.ToString()} ";
+                expectedLine += $"{pokemonData.DisplayCp} {runs} run(s) - ";
+                expectedLine += $"{pokemonData.OwnerName}";
                 Assert.Equal(expectedLine, line);
                 i += 1;
             }

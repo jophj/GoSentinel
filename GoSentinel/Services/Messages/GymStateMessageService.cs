@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GoSentinel.Data;
+using POGOProtos.Data;
 using POGOProtos.Enums;
 
 namespace GoSentinel.Services.Messages
@@ -15,6 +16,13 @@ namespace GoSentinel.Services.Messages
             { TeamColor.Blue, ":blue_hearth:"},
             { TeamColor.Yellow, ":yellow_hearth:"},
             { TeamColor.Neutral, ":white_circle:" }
+        };
+
+        private readonly float[] _cpThresholds = new float[]
+        {
+            0,
+            .4666f,
+            .7333f
         };
 
         public string Generate(GymStateActionResponse actionResponse)
@@ -36,8 +44,12 @@ namespace GoSentinel.Services.Messages
             messageBuilder.AppendLine();
 
             var membershipMessageLines = actionResponse.GymState.Memberships.Select((gs, i) =>
-                $"{i + 1}. {gs.PokemonData.PokemonId.ToString()} {gs.PokemonData.DisplayCp} - {gs.PokemonData.OwnerName}"
-            );
+            {
+                PokemonData pokemonData = gs.PokemonData;
+                int runs = _cpThresholds.Count(cpt => ((double) pokemonData.Cp / (double) pokemonData.DisplayCp) > cpt);
+                return
+                    $"{i + 1}. {gs.PokemonData.PokemonId.ToString()} {gs.PokemonData.DisplayCp} {runs} run(s) - {gs.PokemonData.OwnerName}";
+            });
 
             foreach (string line in membershipMessageLines)
             {
