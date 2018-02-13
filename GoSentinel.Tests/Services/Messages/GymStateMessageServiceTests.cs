@@ -36,7 +36,16 @@ namespace GoSentinel.Tests.Services.Messages
             Assert.Throws<ArgumentException>(() => _service.Generate(actionResponse));
         }
 
+        [Fact]
+        public void Generate_WithCompleteGymState_ShoulHaveFormattedFirstLine()
+        {
+            var actionResponse = MakeActionResponse();
 
+            var message = _service.Generate(actionResponse);
+
+            var lines = message.Split(Environment.NewLine);
+            Assert.Equal($"*{actionResponse.GymState.Name}* at {actionResponse.GymState.Timestamp}", lines[0]);
+        }
 
         protected GymStateActionResponse MakeActionResponse()
         {
@@ -47,6 +56,7 @@ namespace GoSentinel.Tests.Services.Messages
                     Id = "GymId",
                     Name = "GymName",
                     OwnedByTeam = TeamColor.Red,
+                    Timestamp = DateTime.Now,
                     Memberships = new RepeatedField<GymMembership>()
                     {
                         new GymMembership()

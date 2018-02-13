@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using GoSentinel.Data;
 
 namespace GoSentinel.Services.Messages
@@ -17,7 +18,12 @@ namespace GoSentinel.Services.Messages
                 throw new ArgumentException("Gym state should not be null");
             }
 
-            return null;
+            StringBuilder messageBuilder = new StringBuilder();
+            messageBuilder.AppendLine(
+                $"*{actionResponse.GymState.Name}* at {actionResponse.GymState.Timestamp}"
+            );
+
+            return messageBuilder.ToString();
         }
     }
 }
