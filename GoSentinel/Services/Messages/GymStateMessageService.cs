@@ -12,9 +12,9 @@ namespace GoSentinel.Services.Messages
     {
         private readonly Dictionary<TeamColor, string> _teamColorEmoji = new Dictionary<TeamColor, string>()
         {
-            { TeamColor.Red, ":hearth:"},
-            { TeamColor.Blue, ":blue_hearth:"},
-            { TeamColor.Yellow, ":yellow_hearth:"},
+            { TeamColor.Red, ":heart:"},
+            { TeamColor.Blue, ":blue_heart:"},
+            { TeamColor.Yellow, ":yellow_heart:"},
             { TeamColor.Neutral, ":white_circle:" }
         };
 

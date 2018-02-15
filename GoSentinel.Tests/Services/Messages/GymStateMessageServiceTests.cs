@@ -17,9 +17,9 @@ namespace GoSentinel.Tests.Services.Messages
     {
         private readonly Dictionary<TeamColor, string> _teamColorEmoji = new Dictionary<TeamColor, string>()
         {
-            { TeamColor.Red, ":hearth:"},
-            { TeamColor.Blue, ":blue_hearth:"},
-            { TeamColor.Yellow, ":yellow_hearth:"},
+            { TeamColor.Red, ":heart:"},
+            { TeamColor.Blue, ":blue_heart:"},
+            { TeamColor.Yellow, ":yellow_heart:"},
             { TeamColor.Neutral, ":white_circle:" }
         };
 
@@ -61,7 +61,7 @@ namespace GoSentinel.Tests.Services.Messages
 
             var lines = message.Split(Environment.NewLine);
             Assert.Equal(
-                $":hearth: *{actionResponse.GymState.Name}* at {actionResponse.GymState.Timestamp}",
+                $":heart: *{actionResponse.GymState.Name}* at {actionResponse.GymState.Timestamp}",
                 lines[0]
                 );
         }

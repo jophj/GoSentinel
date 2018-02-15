@@ -41,6 +41,7 @@ namespace GoSentinel
 
             services.AddSingleton<IActionResponseController<AddPokemonFilterActionResponse>, AddPokemonFilterActionResponseController>();
             services.AddSingleton<IActionResponseController<NearestPokemonActionResponse>, NearestPokemonActionResponseController>();
+            services.AddSingleton<IActionResponseController<GymStateActionResponse>, GymStateActionResponseController>();
 
             services.AddSingleton<IPokemonFilterService, LogPokemonFilterService>();
             services.AddSingleton<INearestPokemonService, FakeNearestPokemonService>();
@@ -49,6 +50,7 @@ namespace GoSentinel
 
             services.AddSingleton<IMessageService<AddPokemonFilterActionResponse>, AddPokemonFilterMessageService>();
             services.AddSingleton<IMessageService<NearestPokemonActionResponse>, PokemonSpawnMessageService>();
+            services.AddSingleton<IMessageService<GymStateActionResponse>, GymStateMessageService>();
 
             services.AddSingleton<IBotMessageController, BotMessageController>();
             services.AddSingleton<AiResponseToActionService, AiResponseToActionService>();

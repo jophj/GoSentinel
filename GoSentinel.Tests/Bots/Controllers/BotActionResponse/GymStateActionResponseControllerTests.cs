@@ -7,7 +7,6 @@ using GoSentinel.Services.Messages;
 using Moq;
 using POGOProtos.Data;
 using POGOProtos.Data.Gym;
-using POGOProtos.Data.Player;
 using POGOProtos.Enums;
 using Telegram.Bot.Types;
 using Xunit;
