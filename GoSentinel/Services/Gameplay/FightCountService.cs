@@ -24,7 +24,7 @@ namespace GoSentinel.Services.Gameplay
                 throw new ArgumentException("Max CP should not be less than decayed CP");
             }
 
-            int runs = _cpThresholds.Count(cpt => ((double)maxCp / (double)decayedCp) > cpt);
+            int runs = _cpThresholds.Count(cpt => ((double)decayedCp / (double)maxCp) > cpt);
             return runs;
         }
     }

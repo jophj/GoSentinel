@@ -2,7 +2,6 @@
 using Google.Protobuf.Collections;
 using POGOProtos.Data;
 using POGOProtos.Data.Gym;
-using POGOProtos.Data.Player;
 using POGOProtos.Enums;
 using GymState = GoSentinel.Models.GymState;
 
