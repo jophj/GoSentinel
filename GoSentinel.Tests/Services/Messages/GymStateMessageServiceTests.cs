@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Google.Protobuf.Collections;
 using GoSentinel.Data;
+using GoSentinel.Services.Gameplays;
 using GoSentinel.Services.Messages;
 using POGOProtos.Data;
 using POGOProtos.Data.Gym;
@@ -23,17 +24,11 @@ namespace GoSentinel.Tests.Services.Messages
             { TeamColor.Neutral, "Neutral" }
         };
 
-        private readonly float[] _cpThresholds = {
-            0,
-            .4666f,
-            .7333f
-        };
-
         private readonly GymStateMessageService _service;
 
         public GymStateMessageServiceTests()
         {
-            _service = new GymStateMessageService();
+            _service = new GymStateMessageService(new FightCountService());
         }
 
         [Fact]
@@ -70,7 +65,7 @@ namespace GoSentinel.Tests.Services.Messages
         [InlineData(TeamColor.Blue)]
         [InlineData(TeamColor.Yellow)]
         [InlineData(TeamColor.Neutral)]
-        public void Generate_WithDifferentGymColor_ShouldUseCorrectEmoji(TeamColor teamColor)
+        public void Generate_WithDifferentGymColor_ShouldUseCorrectTeamName(TeamColor teamColor)
         {
             var actionResponse = MakeActionResponse();
             actionResponse.GymState.OwnedByTeam = teamColor;
@@ -78,7 +73,7 @@ namespace GoSentinel.Tests.Services.Messages
             var message = _service.Generate(actionResponse);
 
             var lines = message.Split(Environment.NewLine);
-            Assert.StartsWith(_teamColorNames[teamColor], lines[0]);
+            Assert.Contains(_teamColorNames[teamColor], lines[0]);
         }
 
         [Fact]
@@ -104,7 +99,7 @@ namespace GoSentinel.Tests.Services.Messages
             foreach (string line in lines)
             {
                 PokemonData pokemonData = actionResponse.GymState.Memberships[i].PokemonData;
-                int runs = _cpThresholds.Count(cpt => ((double)pokemonData.Cp / (double)pokemonData.DisplayCp) > cpt);
+                int runs = new FightCountService().Count(pokemonData.Cp, pokemonData.DisplayCp);
 
                 string expectedLine = $"{i + 1}. ";
                 expectedLine += $"{pokemonData.PokemonId.ToString()} ";

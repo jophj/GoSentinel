@@ -1,7 +1,6 @@
 ﻿using System;
 using GoSentinel.Data;
 using GoSentinel.Models;
-using GoSentinel.Models;
 using GoSentinel.Services.Messages;
 using POGOProtos.Enums;
 using Telegram.Bot.Types;

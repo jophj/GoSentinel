@@ -3,6 +3,7 @@ using Google.Protobuf.Collections;
 using GoSentinel.Bots;
 using GoSentinel.Bots.Controllers.BotActionResponse;
 using GoSentinel.Data;
+using GoSentinel.Services.Gameplays;
 using GoSentinel.Services.Messages;
 using Moq;
 using POGOProtos.Data;
@@ -20,7 +21,7 @@ namespace GoSentinel.Tests.Bots.Controllers.BotActionResponse
 
         public GymStateActionResponseControllerTests()
         {
-            _messageService = new GymStateMessageService();
+            _messageService = new GymStateMessageService(new FightCountService());
             base.Controller = new GymStateActionResponseController(_messageService);
         }
 

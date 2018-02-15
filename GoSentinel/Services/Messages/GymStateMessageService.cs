@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GoSentinel.Data;
+using GoSentinel.Services.Gameplays;
 using POGOProtos.Data;
 using POGOProtos.Enums;
 
@@ -10,6 +11,8 @@ namespace GoSentinel.Services.Messages
 {
     public class GymStateMessageService : IMessageService<GymStateActionResponse>
     {
+        private readonly FightCountService _fightCountService;
+
         private readonly Dictionary<TeamColor, string> _teamColorName = new Dictionary<TeamColor, string>()
         {
             { TeamColor.Red, "Valor" },
@@ -18,12 +21,10 @@ namespace GoSentinel.Services.Messages
             { TeamColor.Neutral, "Neutral" }
         };
 
-        private readonly float[] _cpThresholds = new float[]
+        public GymStateMessageService(FightCountService fightCountService)
         {
-            0,
-            .4666f,
-            .7333f
-        };
+            _fightCountService = fightCountService;
+        }
 
         public string Generate(GymStateActionResponse actionResponse)
         {
@@ -38,7 +39,7 @@ namespace GoSentinel.Services.Messages
             }
 
             StringBuilder messageBuilder = new StringBuilder();
-            messageBuilder.Append($"*{ actionResponse.GymState.Name}*");
+            messageBuilder.Append($"*{ actionResponse.GymState.Name}* ");
             messageBuilder.Append($"({_teamColorName[actionResponse.GymState.OwnedByTeam]})");
             messageBuilder.Append($" at {actionResponse.GymState.Timestamp}");
             messageBuilder.AppendLine();
@@ -46,9 +47,9 @@ namespace GoSentinel.Services.Messages
             var membershipMessageLines = actionResponse.GymState.Memberships.Select((gs, i) =>
             {
                 PokemonData pokemonData = gs.PokemonData;
-                int runs = _cpThresholds.Count(cpt => ((double) pokemonData.Cp / (double) pokemonData.DisplayCp) > cpt);
+                int runs = _fightCountService.Count(pokemonData.Cp, pokemonData.DisplayCp);
                 return
-                    $"{i + 1}. {gs.PokemonData.PokemonId.ToString()} {gs.PokemonData.DisplayCp} {runs} run(s) - {gs.PokemonData.OwnerName}";
+                    $"{i + 1}. {pokemonData.PokemonId.ToString()} {pokemonData.DisplayCp} {runs} run(s) - {pokemonData.OwnerName}";
             });
 
             foreach (string line in membershipMessageLines)
