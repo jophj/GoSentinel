@@ -15,16 +15,15 @@ namespace GoSentinel.Tests.Services.Messages
 {
     public class GymStateMessageServiceTests
     {
-        private readonly Dictionary<TeamColor, string> _teamColorEmoji = new Dictionary<TeamColor, string>()
+        private readonly Dictionary<TeamColor, string> _teamColorNames = new Dictionary<TeamColor, string>()
         {
-            { TeamColor.Red, ":heart:"},
-            { TeamColor.Blue, ":blue_heart:"},
-            { TeamColor.Yellow, ":yellow_heart:"},
-            { TeamColor.Neutral, ":white_circle:" }
+            { TeamColor.Red, "Valor" },
+            { TeamColor.Blue, "Mystic" },
+            { TeamColor.Yellow, "Instinct" },
+            { TeamColor.Neutral, "Neutral" }
         };
 
-        private readonly float[] _cpThresholds = new float[]
-        {
+        private readonly float[] _cpThresholds = {
             0,
             .4666f,
             .7333f
@@ -61,7 +60,7 @@ namespace GoSentinel.Tests.Services.Messages
 
             var lines = message.Split(Environment.NewLine);
             Assert.Equal(
-                $":heart: *{actionResponse.GymState.Name}* at {actionResponse.GymState.Timestamp}",
+                $"*{actionResponse.GymState.Name}* ({_teamColorNames[actionResponse.GymState.OwnedByTeam]}) at {actionResponse.GymState.Timestamp}",
                 lines[0]
                 );
         }
@@ -79,7 +78,7 @@ namespace GoSentinel.Tests.Services.Messages
             var message = _service.Generate(actionResponse);
 
             var lines = message.Split(Environment.NewLine);
-            Assert.StartsWith(_teamColorEmoji[teamColor], lines[0]);
+            Assert.StartsWith(_teamColorNames[teamColor], lines[0]);
         }
 
         [Fact]

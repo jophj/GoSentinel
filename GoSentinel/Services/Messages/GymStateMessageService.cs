@@ -10,12 +10,12 @@ namespace GoSentinel.Services.Messages
 {
     public class GymStateMessageService : IMessageService<GymStateActionResponse>
     {
-        private readonly Dictionary<TeamColor, string> _teamColorEmoji = new Dictionary<TeamColor, string>()
+        private readonly Dictionary<TeamColor, string> _teamColorName = new Dictionary<TeamColor, string>()
         {
-            { TeamColor.Red, ":heart:"},
-            { TeamColor.Blue, ":blue_heart:"},
-            { TeamColor.Yellow, ":yellow_heart:"},
-            { TeamColor.Neutral, ":white_circle:" }
+            { TeamColor.Red, "Valor" },
+            { TeamColor.Blue, "Mystic" },
+            { TeamColor.Yellow, "Instinct" },
+            { TeamColor.Neutral, "Neutral" }
         };
 
         private readonly float[] _cpThresholds = new float[]
@@ -38,8 +38,8 @@ namespace GoSentinel.Services.Messages
             }
 
             StringBuilder messageBuilder = new StringBuilder();
-            messageBuilder.Append(_teamColorEmoji[actionResponse.GymState.OwnedByTeam]);
-            messageBuilder.Append($" *{ actionResponse.GymState.Name}*");
+            messageBuilder.Append($"*{ actionResponse.GymState.Name}*");
+            messageBuilder.Append($"({_teamColorName[actionResponse.GymState.OwnedByTeam]})");
             messageBuilder.Append($" at {actionResponse.GymState.Timestamp}");
             messageBuilder.AppendLine();
 
