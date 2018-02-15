@@ -1,6 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
-namespace GoSentinel.Services.Gameplays
+namespace GoSentinel.Services.Gameplay
 {
     public class FightCountService
     {
@@ -13,6 +14,16 @@ namespace GoSentinel.Services.Gameplays
 
         public int Count(int maxCp, int decayedCp)
         {
+            if (maxCp == 0 || decayedCp == 0)
+            {
+                throw new ArgumentException();
+            }
+
+            if (maxCp < decayedCp)
+            {
+                throw new ArgumentException("Max CP should not be less than decayed CP");
+            }
+
             int runs = _cpThresholds.Count(cpt => ((double)maxCp / (double)decayedCp) > cpt);
             return runs;
         }

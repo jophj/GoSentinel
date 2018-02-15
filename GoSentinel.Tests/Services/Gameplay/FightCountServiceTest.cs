@@ -1,5 +1,5 @@
 ﻿using System;
-using GoSentinel.Services.Gameplays;
+using GoSentinel.Services.Gameplay;
 using Xunit;
 
 namespace GoSentinel.Tests.Services.Gameplay
@@ -23,6 +23,12 @@ namespace GoSentinel.Tests.Services.Gameplay
         public void Count_WithZeroDecayedCp_ShouldThrowArumentException()
         {
             Assert.Throws<ArgumentException>(() => _service.Count(1, 0));
+        }
+
+        [Fact]
+        public void Count_WithHigherDecayedCp_ShoultThrowArgumentException()
+        {
+            Assert.Throws<ArgumentException>(() => _service.Count(10, 20));
         }
     }
 }

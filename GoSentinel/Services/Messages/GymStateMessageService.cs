@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GoSentinel.Data;
-using GoSentinel.Services.Gameplays;
+using GoSentinel.Services.Gameplay;
 using POGOProtos.Data;
 using POGOProtos.Enums;
 

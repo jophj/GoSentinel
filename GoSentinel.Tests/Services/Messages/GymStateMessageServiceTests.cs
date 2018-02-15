@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Google.Protobuf.Collections;
 using GoSentinel.Data;
-using GoSentinel.Services.Gameplays;
+using GoSentinel.Services.Gameplay;
 using GoSentinel.Services.Messages;
 using POGOProtos.Data;
 using POGOProtos.Data.Gym;
