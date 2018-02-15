@@ -1,7 +1,6 @@
 ﻿using System;
 using GoSentinel.Data;
 using GoSentinel.Models;
-using GoSentinel.Models;
 using GoSentinel.Services.Messages;
 using POGOProtos.Enums;
 using Telegram.Bot.Types;
@@ -38,6 +37,7 @@ namespace GoSentinel.Tests.Services.Messages
             actionResponse.SpawnPokemon.Attack = atk;
 
             var message = _service.Generate(actionResponse);
+
             var iv = ((
                           actionResponse.SpawnPokemon.Attack.Value +
                           actionResponse.SpawnPokemon.Defense.Value +
@@ -45,7 +45,6 @@ namespace GoSentinel.Tests.Services.Messages
                       ) * 100 / 45f).ToString("0.0");
 
             var lines = message.Split(Environment.NewLine);
-
             Assert.Equal($"**{pokemonName} {iv}%**", lines[0]);
         }
 

@@ -10,6 +10,7 @@ using GoSentinel.Services;
 using GoSentinel.Data;
 using GoSentinel.Services.Actions;
 using GoSentinel.Services.ActionMappings;
+using GoSentinel.Services.Gameplay;
 using GoSentinel.Services.Messages;
 
 namespace GoSentinel
@@ -41,14 +42,17 @@ namespace GoSentinel
 
             services.AddSingleton<IActionResponseController<AddPokemonFilterActionResponse>, AddPokemonFilterActionResponseController>();
             services.AddSingleton<IActionResponseController<NearestPokemonActionResponse>, NearestPokemonActionResponseController>();
+            services.AddSingleton<IActionResponseController<GymStateActionResponse>, GymStateActionResponseController>();
 
             services.AddSingleton<IPokemonFilterService, LogPokemonFilterService>();
             services.AddSingleton<INearestPokemonService, FakeNearestPokemonService>();
             services.AddSingleton<IGymIdByNameService, FakeGymIdByNameService>();
             services.AddSingleton<IGymStateService, FakeGymStateService>();
+            services.AddSingleton<FightCountService, FightCountService>();
 
             services.AddSingleton<IMessageService<AddPokemonFilterActionResponse>, AddPokemonFilterMessageService>();
             services.AddSingleton<IMessageService<NearestPokemonActionResponse>, PokemonSpawnMessageService>();
+            services.AddSingleton<IMessageService<GymStateActionResponse>, GymStateMessageService>();
 
             services.AddSingleton<IBotMessageController, BotMessageController>();
             services.AddSingleton<AiResponseToActionService, AiResponseToActionService>();

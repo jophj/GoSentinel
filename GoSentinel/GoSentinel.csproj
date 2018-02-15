@@ -5,16 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\SpawnPokemon.cs" />
-    <Compile Remove="Services\Actions\FakeGymIdByNameService.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Common\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="ApiAiSDK" Version="1.6.5" />
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
