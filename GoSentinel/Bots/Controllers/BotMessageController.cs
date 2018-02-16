@@ -40,16 +40,31 @@ namespace GoSentinel.Bots.Controllers
                 throw new UnrecognizableIntentException();
             }
 
-            IAction action = _aiResponseToActionService.Map(aiResponse);
+            IAction action = MapAiResponse(aiResponse);
             action.Message = message;
 
-            Type actionControllerGenericType = typeof(IActionController<>).MakeGenericType(action.GetType());
-            IActionController actionController = (IActionController)_serviceProvider.GetService(actionControllerGenericType);
+            IActionController actionController = GetActionController(action);
             IActionResponse actionResponse = actionController?.Handle(action);
 
-            Type actionResponseControllerGenericType = typeof(IActionResponseController<>).MakeGenericType(actionResponse.GetType());
-            IActionResponseController actionResponseController = (IActionResponseController)_serviceProvider.GetService(actionResponseControllerGenericType);
+            IActionResponseController actionResponseController = GetActionResponseController(actionResponse);
             actionResponseController?.HandleAsync(bot, actionResponse);
+        }
+
+        protected virtual IActionResponseController GetActionResponseController(IActionResponse actionResponse)
+        {
+            Type actionResponseControllerGenericType = typeof(IActionResponseController<>).MakeGenericType(actionResponse.GetType());
+            return (IActionResponseController)_serviceProvider.GetService(actionResponseControllerGenericType);
+        }
+
+        protected virtual IActionController GetActionController(IAction action)
+        {
+            Type actionControllerGenericType = typeof(IActionController<>).MakeGenericType(action.GetType());
+            return (IActionController)_serviceProvider.GetService(actionControllerGenericType);
+        }
+
+        protected virtual IAction MapAiResponse(AIResponse aiResponse)
+        {
+            return _aiResponseToActionService.Map(aiResponse);
         }
 
         protected virtual AIResponse TextRequest(string messageText)

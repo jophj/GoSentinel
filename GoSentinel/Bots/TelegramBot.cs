@@ -20,7 +20,6 @@ namespace GoSentinel.Bots
             _client = new TelegramBotClient(config.Token);
             _client.StartReceiving();
             _client.OnMessage += OnMessage;
-
         }
 
         private void OnMessage(object sender, MessageEventArgs e)
