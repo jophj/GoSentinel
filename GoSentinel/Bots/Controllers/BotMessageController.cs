@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Data;
-using System.Threading.Tasks;
 using ApiAiSDK;
 using ApiAiSDK.Model;
 using GoSentinel.Data;
-using GoSentinel.Services;
 using GoSentinel.Services.ActionMappings;
 using Telegram.Bot.Types;
 
 namespace GoSentinel.Bots.Controllers
 {
+    public class UnrecognizableIntentException : Exception
+    {}
+
     public class BotMessageController :  IBotMessageController
     {
         private readonly ApiAi _apiAi;
@@ -29,21 +29,32 @@ namespace GoSentinel.Bots.Controllers
 
         public void OnMessage(IBot bot, Message message)
         {
-            AIResponse aiResponse = _apiAi.TextRequest(message.Text ?? "wi");
+            if (bot == null || message == null)
+            {
+                throw new ArgumentException();
+            }
+
+            AIResponse aiResponse = TextRequest(message.Text);
+            if (aiResponse.Result.Action == Data.BotAction.InputUnknown)
+            {
+                throw new UnrecognizableIntentException();
+            }
+
             IAction action = _aiResponseToActionService.Map(aiResponse);
             action.Message = message;
+
             Type actionControllerGenericType = typeof(IActionController<>).MakeGenericType(action.GetType());
             IActionController actionController = (IActionController)_serviceProvider.GetService(actionControllerGenericType);
             IActionResponse actionResponse = actionController?.Handle(action);
 
-            if (actionResponse == null)
-            {
-                throw new ApplicationException("Action response should is null");
-            }
-
             Type actionResponseControllerGenericType = typeof(IActionResponseController<>).MakeGenericType(actionResponse.GetType());
             IActionResponseController actionResponseController = (IActionResponseController)_serviceProvider.GetService(actionResponseControllerGenericType);
             actionResponseController?.HandleAsync(bot, actionResponse);
+        }
+
+        protected virtual AIResponse TextRequest(string messageText)
+        {
+            return _apiAi.TextRequest(messageText);
         }
     }
 }
