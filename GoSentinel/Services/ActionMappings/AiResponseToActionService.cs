@@ -5,7 +5,12 @@ using GoSentinel.Data;
 
 namespace GoSentinel.Services.ActionMappings
 {
-    public class AiResponseToActionService
+    public interface IAiResponseToActionService
+    {
+        IAction Map(AIResponse aiResponse);
+    }
+
+    public class AiResponseToActionService : IAiResponseToActionService
     {
         public AiResponseToActionService(
             PokemonFilterMapping pokemonFilterMapping,
