@@ -7,10 +7,10 @@
   <ItemGroup>
     <PackageReference Include="ApiAiSDK" Version="1.6.5" />
     <PackageReference Include="AutoMapper" Version="6.2.2" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
-    <PackageReference Include="POGOProtos.Core" Version="2.20.0" />
-    <PackageReference Include="Telegram.Bot" Version="13.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" />
+    <PackageReference Include="POGOProtos.Core" Version="2.22.0" />
+    <PackageReference Include="Telegram.Bot" Version="14.0.0-rc-367" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GoSentinel.Bots;
 using GoSentinel.Bots.Controllers;
 using GoSentinel.Data;
-using Telegram.Bot.Types;
 
 namespace GoSentinel.Services
 {
